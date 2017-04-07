@@ -15,10 +15,15 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('list',['uses'=> 'SinhVienController@getList']);
-Route::post('add',['uses'=> 'SinhVienController@getAdd']);
-Route::get('edit/{id}',['uses'=> 'SinhVienController@getEdit']);
-Route::post('edit/{id}',['uses'=> 'SinhVienController@postEdit']);
-Route::get('delete/{id}',['uses'=> 'SinhVienController@getDelete']);
+Route::get('login',['as' => 'getLogin', 'uses' => 'LoginController@getLogin']);
+Route::post('login',['as' => 'postLogin', 'uses' => 'LoginController@postLogin']);
+Route::group(['middleware'=>'isteacher'], function(){
+	Route::group(['prefix' => 'teachersites'], function(){
+		//Route::get('/',['as' => 'getStatistics', 'uses' => 'AdminController@getStatistics']);
+		Route::get('/', function(){
+    		return "You are login as teacher";
+    	});
 
+	});
+});
 

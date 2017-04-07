@@ -36,9 +36,17 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'users' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'teachers' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
+        ],
+        'students' => [
+            'driver' => 'session',
+            'provider' => 'students',
         ],
 
         'api' => [
@@ -68,6 +76,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Teacher::class,
+        ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Student::class,
         ],
 
         // 'users' => [
