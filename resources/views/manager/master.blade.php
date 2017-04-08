@@ -28,12 +28,12 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-        <link href="<?php echo asset('public/template/css/admin.css') ; ?>" rel="stylesheet" type="text/css">
+        <link href="<?php echo asset('public/template/css/manager.css') ; ?>" rel="stylesheet" type="text/css">
     @yield('header')
 </head>
 
 <body>
-
+    
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -45,13 +45,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Admin Area</a>
+                <a class="navbar-brand" href="index.html">Manager Area</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
 
-                <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         {!! Auth::guard('users')->user()->name!!} 
@@ -73,7 +72,8 @@
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
+                <div class="sidebar-nav navbar-collapse collapse">
+                    
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">

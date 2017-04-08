@@ -1,7 +1,7 @@
 var app= angular.module('my-app', [] ,function($interpolateProvider) {
-    $interpolateProvider.startSymbol('{{');
-    $interpolateProvider.endSymbol('}}');
+    $interpolateProvider.startSymbol('{%');
+    $interpolateProvider.endSymbol('%}');
 
  
 
-}).constant('API', 'http://laravel-angular.dev:8080/');
+}).constant('API', 'http://duckien.dev:8080/');

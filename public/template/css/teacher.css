@@ -1,0 +1,37 @@
+.navbar-default {
+    background-color: #e4e4e4;
+    border-color: #cccccc;
+}
+a {
+ 
+    text-decoration: none;
+}
+
+.navbar a {
+    color: #000000;
+}
+.navbar-default .navbar-brand {
+    color: #000;
+}
+.nav li a:hover{
+    background-color:  #ef561c;
+}
+body{
+  background-color: #e4e4e4;
+}
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #000;
+    background-color: transparent;
+}
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: #dedede;
+    }
+    .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: #dedede;
+    border-color: #dedede;
+}
+.page-header {
+
+    border-bottom: 1px solid #cccccc;
+}
