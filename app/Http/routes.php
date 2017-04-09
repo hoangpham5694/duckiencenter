@@ -41,6 +41,21 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 		Route::get('/', function(){
     		return view('admin.dashboard.main');
     	});
+		Route::group(['prefix' => 'teacher'], function(){
+			Route::get('list',['as' => 'getTeacherListAdmin', 'uses' => 'TeacherController@getTeacherList']);
+			Route::get('listjson/{max}/{page}',['as' => 'getTeacherListJsonAdmin', 'uses' => 'TeacherController@getTeacherListJson']);
+			Route::get('totaljson',['as' => 'getTeacherTotalJsonAdmin', 'uses' => 'TeacherController@getTeacherTotalJson']);
+			Route::get('add',['as' => 'getTeacherAddAdmin', 'uses' => 'TeacherController@getTeacherAdd']);
+			Route::post('add',['as' => 'postTeacherAddAdmin', 'uses' => 'TeacherController@postTeacherAdd']);
+			Route::get('edit/{id}',['as' => 'getTeacherEditAdmin', 'uses' => 'TeacherController@getTeacherEdit']);
+			Route::post('edit/{id}',['as' => 'postTeacherEditAdmin', 'uses' => 'TeacherController@postTeacherEdit']);
+			Route::get('delete/{id}',['as' => 'getTeacherDeleteAdmin', 'uses' => 'TeacherController@getTeacherDelete']);
+
+		});
+		Route::group(['prefix' => 'course'], function(){
+			Route::get('list',['as' => 'getCourseListAdmin', 'uses' => 'CourseController@getCourseList']);
+
+		});
 
 	});
 });
