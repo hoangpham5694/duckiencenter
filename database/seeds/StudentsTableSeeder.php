@@ -19,6 +19,7 @@ class StudentsTableSeeder extends Seeder
 					'dob' => '1994/06/05',
 					'password' => bcrypt('12345'),
 					'phone' => '123456789',
+					'status' => 'active',
 					'created_at' => new DateTime()
 					],
 										[
@@ -27,6 +28,7 @@ class StudentsTableSeeder extends Seeder
 					'dob' => '1994/06/05',
 					'password' => bcrypt('12345'),
 					'phone' => '123456789',
+					'status' => 'active',
 					'created_at' => new DateTime()
 					],
 		

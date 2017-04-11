@@ -8,7 +8,7 @@ class Course extends Model
 {
     protected $table = 'courses';
     protected $fillable = [
-        'id', 'description', 'fee', 'name', 'status', 'teacher_id', 'opening_date', 'agency_id'
+        'id', 'description','max_students', 'fee', 'name', 'status', 'teacher_id', 'opening_date', 'agency_id'
     ];
     public function cource_monthly(){
         return $this->hasMany('CourceMonthly');

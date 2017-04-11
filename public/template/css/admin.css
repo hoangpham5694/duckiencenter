@@ -37,3 +37,6 @@ body{
 .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
     background-color: #668898;
 }
+.info-course ul{
+    padding-left: 0;
+}

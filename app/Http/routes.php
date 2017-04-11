@@ -53,7 +53,20 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 
 		});
 		Route::group(['prefix' => 'course'], function(){
-			Route::get('list',['as' => 'getCourseListAdmin', 'uses' => 'CourseController@getCourseList']);
+			Route::get('list',['as' => 'getCourseListAdmin', 'uses' => 'CourseController@getCourseListAdmin']);
+			Route::get('listjson',['as' => 'getCourseListJsonAdmin', 'uses' => 'CourseController@getCourseListJson']);
+			Route::get('totaljson',['as' => 'getCourseTotalJsonAdmin', 'uses' => 'CourseController@getCourseTotalJson']);
+			Route::get('add',['as' => 'getCourseAddAdmin', 'uses' => 'CourseController@getCourseAddAdmin']);
+			Route::post('add',['as' => 'postCourseAddAdmin', 'uses' => 'CourseController@postCourseAddAdmin']);
+			Route::get('edit/{id}',['as' => 'getCourseEditAdmin', 'uses' => 'CourseController@getCourseEditAdmin']);
+			Route::post('edit/{id}',['as' => 'postCourseEditAdmin', 'uses' => 'CourseController@postCourseEditAdmin']);
+			Route::get('delete/{id}',['as' => 'getCourseDeleteAdmin', 'uses' => 'CourseController@getCourseDelete']);
+			Route::get('detail/{id}',['as' => 'getCourseDetailAdmin', 'uses' => 'CourseController@getCourseDetailAdmin']);
+			Route::get('listcoursestudentsjson/{id}',['as' => 'getCourseStudentsListJsonAdmin', 'uses' => 'CourseController@getCourseStudentsListJsonAdmin']);
+			Route::get('listallstudentsjson/{id}',['as' => 'getAllStudentsNotInCourseListJsonAdmin', 'uses' => 'CourseController@getAllStudentsNotInCourseListJsonAdmin']);
+			Route::get('addstudenttosourse/{courseid}/{studentid}',['as' => 'getAddStudentToCourseAdmin', 'uses' => 'CourseController@getAddStudentToCourseAdmin']);
+			Route::get('deletestudentcourse/{id}',['as' => 'getDeleteStudentCourseAdmin', 'uses' => 'CourseController@getDeleteStudentCourseAdmin']);
+
 
 		});
 
@@ -64,7 +77,18 @@ Route::group(['middleware'=>'isrolemanager'], function(){
 		//Route::get('/',['as' => 'getStatistics', 'uses' => 'AdminController@getStatistics']);
 		Route::get('/', function(){
     		return view('manager.dashboard.main');
-    	});
 
+    	});
+		Route::group(['prefix' => 'course'], function(){
+			Route::get('list',['as' => 'getCourseListAdmin', 'uses' => 'CourseController@getCourseList']);
+			Route::get('listjson',['as' => 'getCourseListJsonAdmin', 'uses' => 'CourseController@getCourseListJson']);
+			Route::get('totaljson',['as' => 'getCourseTotalJsonAdmin', 'uses' => 'CourseController@getCourseTotalJson']);
+			Route::get('add',['as' => 'getCourseAddAdmin', 'uses' => 'CourseController@getCourseAdd']);
+			Route::post('add',['as' => 'postCourseAddAdmin', 'uses' => 'CourseController@postCourseAdd']);
+			Route::get('edit/{id}',['as' => 'getCourseEditAdmin', 'uses' => 'CourseController@getCourseEdit']);
+			Route::post('edit/{id}',['as' => 'postCourseEditAdmin', 'uses' => 'CourseController@postCourseEdit']);
+			Route::get('delete/{id}',['as' => 'getCourseDeleteAdmin', 'uses' => 'CourseController@getCourseDelete']);
+
+		});
 	});
 });
