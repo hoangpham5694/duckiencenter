@@ -18,12 +18,18 @@ class CourseController extends Controller
     	return view('admin.courses.list');
     }
     public function getCourseListJson(Request $request){
+        $keyword = $request->keyword;
     	$numberRecord= $request->max;
     	$page = $request->page;
         $vitri =($page -1 ) * $numberRecord;
      //   $totalTeacher = Teacher::count();
     //    $numPages = $totalApp / $numberRecord +1;
-    	$data = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.name as teacher_name','courses.status')->where('courses.status','=','active')->orderBy('courses.id','DESC')->limit($numberRecord)->offset($vitri)->get();
+    	$data = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.name as teacher_name','courses.status')->where('courses.status','=','active')
+        ->where(function($query) use ($keyword){
+            $query->where('courses.name','LIKE','%'.$keyword.'%');
+
+        })
+        ->orderBy('courses.id','DESC')->limit($numberRecord)->offset($vitri)->get();
     	return $data;
     }
     public function getCourseTotalJson(){
@@ -119,6 +125,10 @@ class CourseController extends Controller
     public function getDeleteStudentCourseAdmin($id){
         CourseStudent::where('id','=',$id)->delete();
         return "Xóa học viên khỏi lớp học thành công";
+    }
+
+    public function getFeeListCoursesAdmin(){
+        return view('admin.fees.list_course');
     }
 
 }

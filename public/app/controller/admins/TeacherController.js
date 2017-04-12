@@ -1,5 +1,5 @@
 app.controller('TeacherController', function($scope, $http, API,$timeout){	
-	var maxRecord = 2;
+	var maxRecord = 20;
 	$scope.maxRecord = maxRecord;
 	 var getTotalTeachers = function(){
 	 	$http.get(API + 'adminsites/teacher/totaljson').then(function successCallback (response){

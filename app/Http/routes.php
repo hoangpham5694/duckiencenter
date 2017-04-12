@@ -69,6 +69,17 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 
 
 		});
+		Route::group(['prefix' => 'fee'],function(){
+			Route::get('listcourses',['as' => 'getFeeListCoursesAdmin', 'uses' => 'CourseController@getFeeListCoursesAdmin']);
+
+		});
+		Route::group(['prefix' => 'month'],function(){
+			Route::get('list',['as' => 'getListMonthAdmin', 'uses' => 'MonthController@getListMonthAdmin']);
+			Route::get('listjson/{max}/{page}',['as' => 'getMonthListJsonAdmin', 'uses' => 'MonthController@getMonthListJson']);
+			Route::get('totaljson',['as' => 'getMonthTotalJsonAdmin', 'uses' => 'MonthController@getMonthTotalJson']);
+			Route::get('add',['as' => 'getAddMonthAdmin', 'uses' => 'MonthController@getAddMonthAdmin']);
+
+		});
 
 	});
 });
