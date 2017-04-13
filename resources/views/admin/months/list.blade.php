@@ -64,7 +64,7 @@
       <div class="modal-footer">
   
         <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" ng-click="confirmAddMonth(month)">Lưu</button>
+        <button type="button" class="btn btn-primary" ng-click="confirmAddMonth(state,month)">Lưu</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

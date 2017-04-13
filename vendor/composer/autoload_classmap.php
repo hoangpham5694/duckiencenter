@@ -8,6 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddEmailToStudentsTable' => $baseDir . '/database/migrations/2017_04_06_210013_add_email_to_students_table.php',
     'AddEmailToTeachersTable' => $baseDir . '/database/migrations/2017_04_06_210022_add_email_to_teachers_table.php',
+    'AddFirstnameLastnameToStudentTable' => $baseDir . '/database/migrations/2017_04_13_182903_add_firstname_lastname_to_student_table.php',
+    'AddFirstnameLastnameToTeachersTable' => $baseDir . '/database/migrations/2017_04_13_183000_add_firstname_lastname_to_teachers_table.php',
     'AddMonthIdToCourseMonthlyTable' => $baseDir . '/database/migrations/2017_04_12_110648_add_month_id_to_course_monthly_table.php',
     'AddMonthIdToPayentsTable' => $baseDir . '/database/migrations/2017_04_12_110448_add_month_id_to_payents_table.php',
     'AddRoleToUsersTable' => $baseDir . '/database/migrations/2017_04_04_152330_add_role_to_users_table.php',

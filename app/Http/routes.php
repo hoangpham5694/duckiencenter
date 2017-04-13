@@ -71,6 +71,11 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 		});
 		Route::group(['prefix' => 'fee'],function(){
 			Route::get('listcourses',['as' => 'getFeeListCoursesAdmin', 'uses' => 'CourseController@getFeeListCoursesAdmin']);
+			Route::get('coursedetail/{id}',['as' => 'getFeeCourseDetailAdmin', 'uses' => 'FeeController@getFeeCourseDetailAdmin']);
+			Route::get('listcoursemonthlys/{courseid}',['as' => 'getFeeListCourseMonthlyAdmin', 'uses' => 'FeeController@getFeeListCourseMonthlyAdmin']);
+			Route::get('liststudentinmonthjson/{coursemonthlyid}',['as' => 'getFeeListStudentCourseMonthly', 'uses' => 'FeeController@getFeeListStudentCourseMonthly']);
+			Route::get('refreshmonthly/{courseid}',['as' => 'getRefreshMonthly', 'uses' => 'FeeController@getRefreshMonthly']);
+			Route::get('refreshstudentmonthly/{courseid}/{monthlyid}',['as' => 'getRefreshStudentMonthly', 'uses' => 'FeeController@getRefreshStudentMonthly']);
 
 		});
 		Route::group(['prefix' => 'month'],function(){
@@ -78,6 +83,7 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::get('listjson/{max}/{page}',['as' => 'getMonthListJsonAdmin', 'uses' => 'MonthController@getMonthListJson']);
 			Route::get('totaljson',['as' => 'getMonthTotalJsonAdmin', 'uses' => 'MonthController@getMonthTotalJson']);
 			Route::get('add',['as' => 'getAddMonthAdmin', 'uses' => 'MonthController@getAddMonthAdmin']);
+			Route::get('edit/{id}/{name}',['as' => 'getMonthEditAdmin', 'uses' => 'MonthController@getMonthEditAdmin']);
 
 		});
 
@@ -90,7 +96,7 @@ Route::group(['middleware'=>'isrolemanager'], function(){
     		return view('manager.dashboard.main');
 
     	});
-		Route::group(['prefix' => 'course'], function(){
+	/*	Route::group(['prefix' => 'course'], function(){
 			Route::get('list',['as' => 'getCourseListAdmin', 'uses' => 'CourseController@getCourseList']);
 			Route::get('listjson',['as' => 'getCourseListJsonAdmin', 'uses' => 'CourseController@getCourseListJson']);
 			Route::get('totaljson',['as' => 'getCourseTotalJsonAdmin', 'uses' => 'CourseController@getCourseTotalJson']);
@@ -101,5 +107,6 @@ Route::group(['middleware'=>'isrolemanager'], function(){
 			Route::get('delete/{id}',['as' => 'getCourseDeleteAdmin', 'uses' => 'CourseController@getCourseDelete']);
 
 		});
+		*/
 	});
 });

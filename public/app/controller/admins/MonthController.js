@@ -53,6 +53,7 @@ app.controller('MonthController', function($scope, $http, API,$timeout){
 	$scope.modal = function(state,id,name){
 		//console.log(state);
 		$("#modalAdd").modal("show");
+		$scope.state = state;
 		switch(state){
 			case 'add':
 				$scope.modalTitle = "Thêm tháng";
@@ -64,6 +65,7 @@ app.controller('MonthController', function($scope, $http, API,$timeout){
 			break;
 			case 'edit':
 				$scope.modalTitle = "Sửa tháng " + id;
+				$scope.monthId = id;
 				//console.log("id: "+id+" name: "+name);
 				$scope.month = name;
 			break;
@@ -72,13 +74,14 @@ app.controller('MonthController', function($scope, $http, API,$timeout){
 
 		
 	}
-	$scope.confirmAddMonth = function(month){
+	$scope.confirmAddMonth = function(state,month){
 	//	console.log(month);
-		$http.get(API + 'adminsites/month/add?month='+month).then(function successCallback (response){
+		$http.get(API + 'adminsites/month/edit/'+$scope.monthId+"/"+month).then(function successCallback (response){
 
 		//console.log(response.data);
 			alert(response.data);
 			$("#modalAdd").modal("hide");
+			getListMonths(maxRecord,1);
 		}  , function errorCallback(response) {
 			//alert("Xảy ra lỗi trong khi ");
 			console.log(response.data);

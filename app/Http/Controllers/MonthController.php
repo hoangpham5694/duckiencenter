@@ -55,4 +55,12 @@ class MonthController extends Controller
     	}
     	return "Thêm tháng thành công";
     }
+    public function getMonthEditAdmin($id, $name){
+      //  return "id: ".$id." name: ".$name;
+        $month = Month::find($id);
+        $month->name = $name;
+        $month->save();
+        return "Sửa tháng thành công";
+        
+    }
 }

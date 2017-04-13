@@ -267,6 +267,8 @@ class ComposerStaticInitb99590ef6888ae9ec324e2bd9df5b182
     public static $classMap = array (
         'AddEmailToStudentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_06_210013_add_email_to_students_table.php',
         'AddEmailToTeachersTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_06_210022_add_email_to_teachers_table.php',
+        'AddFirstnameLastnameToStudentTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_13_182903_add_firstname_lastname_to_student_table.php',
+        'AddFirstnameLastnameToTeachersTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_13_183000_add_firstname_lastname_to_teachers_table.php',
         'AddMonthIdToCourseMonthlyTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_12_110648_add_month_id_to_course_monthly_table.php',
         'AddMonthIdToPayentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_12_110448_add_month_id_to_payents_table.php',
         'AddRoleToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_04_152330_add_role_to_users_table.php',
