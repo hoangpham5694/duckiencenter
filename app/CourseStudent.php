@@ -8,7 +8,7 @@ class CourseStudent extends Model
 {
 	protected $table = 'course_student';
     protected $fillable = [
-        'id', 'course_id', 'student_id', 'status'
+        'id', 'course_id', 'course_id', 'status'
     ];
     public function course_monthly(){
         return $this->belongsTo('Course');

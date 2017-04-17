@@ -23,6 +23,15 @@ Route::group(['middleware'=>'isteacher'], function(){
 		Route::get('/', function(){
     		return view('teacher.dashboard.main');
     	});
+    	Route::group(['prefix' => 'attendance'], function(){
+    		Route::get('/', function(){
+    			return view('teacher.attendances.index');
+    		});
+    		Route::get('listcoursesofteacherjson',['as' => 'getListCourseOfTeacherJson', 'uses' => 'AttendanceController@getListCourseOfTeacherJson']);
+			Route::get('listmonthlyofcoursejson/{courseid}',['as' => 'getListMonthlyOfCourseJson', 'uses' => 'AttendanceController@getListMonthlyOfCourseJson']);
+			Route::get('listattendancesofmonthlyjson/{monthlyid}',['as' => 'getListAttendancesOfMonthlyJson', 'uses' => 'AttendanceController@getListMonthlyOfCourseJson']);
+
+    	});
 
 	});
 });
@@ -50,6 +59,7 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::get('edit/{id}',['as' => 'getTeacherEditAdmin', 'uses' => 'TeacherController@getTeacherEdit']);
 			Route::post('edit/{id}',['as' => 'postTeacherEditAdmin', 'uses' => 'TeacherController@postTeacherEdit']);
 			Route::get('delete/{id}',['as' => 'getTeacherDeleteAdmin', 'uses' => 'TeacherController@getTeacherDelete']);
+			Route::get('detail/{id}',['as' => 'getTeacherDetailAdmin', 'uses' => 'TeacherController@getTeacherDetailAdmin']);
 
 		});
 		Route::group(['prefix' => 'course'], function(){
@@ -78,8 +88,8 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::get('refreshstudentmonthly/{courseid}/{monthlyid}',['as' => 'getRefreshStudentMonthly', 'uses' => 'FeeController@getRefreshStudentMonthly']);
 
 		});
-		Route::group(['prefix' => 'month'],function(){
-			Route::get('list',['as' => 'getListMonthAdmin', 'uses' => 'MonthController@getListMonthAdmin']);
+		Route::group(['prefix' => 'student'],function(){
+		//	Route::get('list',['as' => 'getListStudentAdmin', 'uses' => 'StudentController@getListMonthAdmin']);
 			Route::get('listjson/{max}/{page}',['as' => 'getMonthListJsonAdmin', 'uses' => 'MonthController@getMonthListJson']);
 			Route::get('totaljson',['as' => 'getMonthTotalJsonAdmin', 'uses' => 'MonthController@getMonthTotalJson']);
 			Route::get('add',['as' => 'getAddMonthAdmin', 'uses' => 'MonthController@getAddMonthAdmin']);

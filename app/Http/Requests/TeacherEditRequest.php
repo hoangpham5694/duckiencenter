@@ -24,7 +24,8 @@ class TeacherEditRequest extends Request
     public function rules()
     {
         return [
-            'txtname' => 'required|min:3',
+            'txtfirstname' => 'required|min:3',
+            'txtlastname' => 'required|min:3',
             'txtpassword' => 'min:6',
             'txtrepassword' => 'same:txtpassword'
         ];
@@ -33,7 +34,8 @@ class TeacherEditRequest extends Request
     {
     return [
 
-        'txtname.required'  => 'Vui lòng nhập tên đầy đủ',
+        'txtfirstname.required'  => 'Vui lòng nhập tên đầy đủ',
+        'txtlastname.required'  => 'Vui lòng nhập tên đầy đủ',
         'txtname.min'  => 'Tên phải trên 3 kí tự',
         'txtpassword.min'  => 'Mật khẩu phải trên 6 kí tự',
         'txtrepassword.same'  => 'Mật khẩu phải trùng nhau',

@@ -8,18 +8,36 @@ class Teacher extends Authenticatable
 {
     protected $table = 'teachers';
     protected $fillable = [
-        'id', 'address', 'dob', 'name', 'status', 'username', 'phone', 'agency_id'
+        'id',
+                'username',
+        'name',
+        'password',
+        'dob',
+        'address',
+        'phone',
+        'agency_id',
+        'status',
+        'email',
+        'firstname',
+        'lastname',
+        'image',
+        'diploma',
+        'degree',
+        'salary_level_id',
+        'skill',
+        'work_history',
+        'amount'
+
     ];
     protected $hidden = [
         'password',
     ];
-    public function payment(){
-        return $this->hasMany('Payment');
-    }
+
     public function cource(){
         return $this->hasMany('Cource');
     }
-    public function agency(){
-        return $this->belongsTo('Agency');
+
+    public function salary_level(){
+        return $this->belongsTo('SalaryLevel');
     }
 }

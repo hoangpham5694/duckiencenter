@@ -91,32 +91,15 @@ Học phí lớp {{ $course->name }}
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Thêm học viên</h4>
+        <h4 class="modal-title">Lập hóa đơn</h4>
       </div>
       <div class="modal-body">
 <form action="" class="form-horizontal">
-    <div class="form-group has-feedback">
-
-    <div class="col-sm-10 col-sm-offset-1">
-      <input type="text" class="form-control" ng-model="keyword" id="inputSuccess" ng-change="searchallstudents(studentCourseId, keyword)" placeholder="Nhập mã học viên, tên, email, hoặc số điện thoại ">
-      <span class="glyphicon glyphicon-search form-control-feedback"></span>
-    </div>
-  </div>
+   
 </form>
 
 
-        <table class="table" >
-          <tr ng-repeat="studentNotIn in studentNotIns" >
-            <td>{%studentNotIn.username%}</td>
-            <td>{%studentNotIn.name%}</td>
-            <td><button class="btn btn-primary pull-right btn-circle" ng-click="addStudentToCourse(studentCourseId,studentNotIn.id)">
-              <i class="glyphicon glyphicon-plus"></i>
-            </button>
-              <div class="clear-fix"></div>
-          </td>
 
-          </tr>
-        </table>
       </div>
  <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

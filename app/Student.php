@@ -8,20 +8,32 @@ class Student extends Authenticatable
 {
     protected $table = 'students';
     protected $fillable = [
-        'id', 'name', 'username', 'dob', 'status', 'phone', 'address', 'parents_phone'
+        'id',       'username',
+        'name',
+        'password',
+        'dob',
+        'address',
+        'phone',
+        'parents_phone',
+        'status',
+        'email',
+        'firstname',
+        'lastname',
+        'nation_id',
+        'gender',
+        'amount',
+
     ];
-    public function payment(){
-        return $this->hasMany('Payment');
+    public function payin(){
+        return $this->hasMany('Payin');
     }
     public function cource_student(){
         return $this->hasMany('CourceStudent');
     }
-    public function student_course_monthly(){
-        return $this->hasMany('StudentCourseMonthly');
+    public function nation(){
+        return $this->belongsTo('Nations');
     }
-    public function student_attendance(){
-        return $this->hasMany('StudentAttendance');
-    }
+ 
     public function exam_mark(){
         return $this->hasMany('ExamMark');
     }

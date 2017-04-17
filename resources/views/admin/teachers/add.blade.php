@@ -1,18 +1,26 @@
 @extends('admin.master')
 @section('header')
     <title>Admin::Thêm giáo viên</title>
+    <script src="{!! asset('public/ckeditor/ckeditor.js') !!}"></script>
 @endsection
 @section('title','Thêm giáo viên')
 @section('content')
 
 <div class="col-md-7" >
-	<form name="frmTeacher" action="" method="post" class="form-horizontal">
+	<form name="frmTeacher" action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <div class="form-group">
-    <label class="control-label col-sm-3" for="name">Họ tên:</label>
+    <label class="control-label col-sm-3" for="lastname">Họ lót:</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" ng-model="teacher.name" ng-required="true" name="txtname" id="txtname" placeholder="Vui lòng nhập tên giáo viên">
-      <span id="helpBlock2" class="text-danger" ng-show="frmTeacher.txtname.$error.required">Vui lòng nhập họ tên</span>
+      <input type="text" class="form-control" ng-model="teacher.lastname" ng-required="true" name="txtlastname" id="lastname" placeholder="Vui lòng nhập Họ lót">
+      <span id="helpBlock2" class="text-danger" ng-show="frmTeacher.txtlastname.$error.required">Vui lòng nhập Họ Lót</span>
+    </div>
+  </div>
+    <div class="form-group">
+    <label class="control-label col-sm-3" for="firstname">Tên:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" ng-model="teacher.firstname" ng-required="true" name="txtfirstname" id="firstname" placeholder="Vui lòng nhập Tên">
+      <span id="helpBlock2" class="text-danger" ng-show="frmTeacher.txtfirstname.$error.required">Vui lòng nhập Tên</span>
     </div>
   </div>
     <div class="form-group">
@@ -32,18 +40,32 @@
     </div>
   </div>
       <div class="form-group">
-    <label class="control-label col-sm-3" for="phone">Chi nhánh:</label>
+    <label class="control-label col-sm-3" for="degree">Trình độ:</label>
     <div class="col-sm-9">
-    <select class="form-control" name="selectagency">
-      @foreach($agencies as $agency)
-          <option value="{{ $agency->id }}">{{ $agency->name }}</option>
-      @endforeach
-
-
+    <select class="form-control" id="degree" name="selectdegree">
+          <option value="Cao đẳng">Cao đẳng</option>
+          <option value="Đại học">Đại học</option>
+          <option value="Thạc sĩ">Thạc sĩ</option>
+          <option value="Tiến sĩ">Tiến sĩ</option>
+          <option value="Phó giáo sư">Phó giáo sư</option>
+          <option value="Giáo sư">Giáo sư</option>
 </select>
 
     </div>
   </div>
+        <div class="form-group">
+    <label class="control-label col-sm-3" for="salarylevel">Bậc lương:</label>
+    <div class="col-sm-9">
+    <select class="form-control" id="salarylevel" name="selectsalarylevel">
+         @foreach($salaryLevels as $salarylevel)
+           <option value="{{ $salarylevel->id }}">{{ $salarylevel->percent }}</option>
+         @endforeach
+    </select>
+
+    </div>
+  </div>
+
+
     <div class="form-group">
     <label class="control-label col-sm-3" for="dob">Ngày sinh:</label>
     <div class="col-sm-9">
@@ -58,6 +80,51 @@
 
     </div>
   </div>
+      <div class="form-group">
+    <label class="control-label col-sm-3" for="diploma">Bằng cấp:</label>
+    <div class="col-sm-9">
+  
+      <textarea name="txtdiploma" id="diploma" class="form-control" rows="3" placeholder="Vd: Bằng cử nhân, Bằng đại học, Tiếng anh B1...."></textarea>
+    </div>
+  </div>
+        <div class="form-group">
+    <label class="control-label col-sm-3" for="skill">Kỹ năng:</label>
+    <div class="col-sm-9">
+  
+      <textarea name="txtskill" id="skill" class="form-control" rows="3" placeholder="Vd: Vật lý, hóa học, anh văn..."></textarea>
+    </div>
+  </div>
+          <div class="form-group">
+    <label class="control-label col-sm-3" for="workhistory">Địa điểm đã công tác:</label>
+    <div class="col-sm-9">
+  
+      <textarea name="txtworkhistory" id="workhistory" class="form-control" rows="3" placeholder="*Lưu ý: Sử dụng ký hiệu </br> để xuống dòng
+      Vd: Năm 2005: Giảng dạy tại Đại học Sư phạm </br>
+      Năm 2017: Giảng dạy tại trung tâm Đức Kiến"></textarea>
+    </div>
+  </div>
+    <div class="form-group">
+    <label class="control-label col-sm-3" for="amount">Tiền ban đầu:</label>
+    <div class="col-sm-9">
+       <div class="input-group">
+      
+     
+       <input type="number" class="form-control" value="0" ng-required="true"  name="txtamount" id="amount" placeholder="Vui lòng nhập số tiền">
+      <div class="input-group-addon">.VND</div>
+    </div>
+     
+
+    </div>
+  </div>
+
+            <div class="form-group">
+    <label class="control-label col-sm-3" for="fileimage">Hình đại diện:</label>
+    <div class="col-sm-9">
+  <input type="file"  required="true" name="fileimage" id="fileimage">
+     
+    </div>
+  </div>
+
   <div class="form-group">
     <label class="control-label col-sm-3" for="pwd">Mật khẩu:</label>
     <div class="col-sm-9"> 
@@ -86,4 +153,9 @@
 @endsection
 @section('footer')
  <script src="<?php echo asset('public/app/controller/admins/TeacherController.js') ; ?>"></script> 
+             <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'workhistory' );
+            </script>
 @endsection

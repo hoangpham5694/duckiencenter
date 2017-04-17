@@ -58,6 +58,7 @@ class FeeController extends Controller
     	return "Cập nhật tháng thành công";
     }
     public function getRefreshStudentMonthly($courseid, $monthlyid){
+        
     	$students = CourseStudent::select('student_id')->where('course_id','=',$courseid)->whereNotIn('student_id', function($query) use($monthlyid){
     		$query->select('student_id')->from('student_course_monthly')->where('month_id','=',$monthlyid);
     	})->where('status','=','active')->get();

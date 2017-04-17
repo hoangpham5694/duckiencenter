@@ -9,20 +9,22 @@
                               <thead>
                                     <tr>
                                         <th>Mã</th>
+                                        <th>Họ</th>
                                         <th>Tên</th>
                                         <th>Email</th>
                                         <th>Điện thoại</th>
-                                        <th>Ngày sinh</th>
+                                        
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 	<tr ng-repeat="teacher in teachers">
                                 		<td>{% teacher.username %}</td>
-                                		<td>{% teacher.name %}</td>
+                                		<td>{% teacher.lastname %}</td>
+                                        <td>{% teacher.firstname %}</td>
                                 		<td>{% teacher.email %}</td>
                                 		<td>{% teacher.phone %}</td>
-                                		<td>{% teacher.dob | dateFilter | date:"dd-MM-yyyy" %}</td>
+                          
                                 		<td>
                                             <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/teacher/edit') !!}/{% teacher.id %}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
