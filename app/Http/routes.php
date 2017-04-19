@@ -89,12 +89,15 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 
 		});
 		Route::group(['prefix' => 'student'],function(){
-		//	Route::get('list',['as' => 'getListStudentAdmin', 'uses' => 'StudentController@getListMonthAdmin']);
-			Route::get('listjson/{max}/{page}',['as' => 'getMonthListJsonAdmin', 'uses' => 'MonthController@getMonthListJson']);
-			Route::get('totaljson',['as' => 'getMonthTotalJsonAdmin', 'uses' => 'MonthController@getMonthTotalJson']);
-			Route::get('add',['as' => 'getAddMonthAdmin', 'uses' => 'MonthController@getAddMonthAdmin']);
-			Route::get('edit/{id}/{name}',['as' => 'getMonthEditAdmin', 'uses' => 'MonthController@getMonthEditAdmin']);
-
+			Route::get('list',['as' => 'getListStudentAdmin', 'uses' => 'StudentController@getListStudentAdmin']);
+			Route::get('listjson/{max}/{page}',['as' => 'getListStudentJsonAdmin', 'uses' => 'StudentController@getListStudentJson']);
+			Route::get('totaljson',['as' => 'getStudentTotalJsonAdmin', 'uses' => 'StudentController@getStudentTotalJson']);
+			Route::get('add',['as' => 'getAddStudentAdmin', 'uses' => 'StudentController@getAddStudentAdmin']);
+			Route::get('checkunique/{username?}',['as' => 'getCheckUniqueAdmin', 'uses' => 'StudentController@getCheckUnique']);
+			Route::post('add',['as' => 'postAddStudentAdmin', 'uses' => 'StudentController@postAddStudentAdmin']);
+			Route::get('detail/{id}',['as' => 'getStudentDetailAdmin', 'uses' => 'StudentController@getStudentDetailAdmin']);
+			Route::get('edit/{id}',['as' => 'getStudentEditAdmin', 'uses' => 'StudentController@getStudentEditlAdmin']);
+		
 		});
 
 	});

@@ -10,11 +10,12 @@ class CourseStudent extends Model
     protected $fillable = [
         'id', 'course_id', 'course_id', 'status'
     ];
-    public function course_monthly(){
-        return $this->belongsTo('Course');
-    }
+
     public function student(){
-        return $this->hasMany('Student');
+        return $this->belongsTo('Student');
+    }
+    public function course(){
+        return $this->belongsTo('Course');
     }
 
 }
