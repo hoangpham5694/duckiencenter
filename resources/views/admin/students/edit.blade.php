@@ -95,8 +95,28 @@
     </div>
   </div>
 
-     
-       
+     <hr>
+           <div class="form-group"> 
+    <div class="col-sm-offset-3 col-sm-9">
+        <p class="text-info">Chỉ nhập trường mật khẩu khi muốn thay đổi mật khẩu</p> 
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label col-sm-3" for="pwd">Mật khẩu:</label>
+    <div class="col-sm-9"> 
+
+      <input type="password" class="form-control" name="txtpassword"   id="password" placeholder="Nhập mật khẩu">
+
+     </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-3" for="pwd">Nhập lại mật khẩu:</label>
+    <div class="col-sm-9"> 
+      <input type="password" class="form-control"  name="txtrepassword"   id="repassword" placeholder="Nhập mật khẩu">
+
+     </div>
+  </div>
 
 
  

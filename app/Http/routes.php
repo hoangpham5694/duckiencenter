@@ -97,9 +97,22 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::post('add',['as' => 'postAddStudentAdmin', 'uses' => 'StudentController@postAddStudentAdmin']);
 			Route::get('detail/{id}',['as' => 'getStudentDetailAdmin', 'uses' => 'StudentController@getStudentDetailAdmin']);
 			Route::get('edit/{id}',['as' => 'getStudentEditAdmin', 'uses' => 'StudentController@getStudentEditlAdmin']);
-		
-		});
+			Route::post('edit/{id}',['as' => 'postStudentEditAdmin', 'uses' => 'StudentController@postStudentEditAdmin']);
+			Route::get('delete/{id}',['as' => 'getStudentDeleteAdmin', 'uses' => 'StudentController@getStudentDelete']);
 
+		});
+		Route::group(['prefix' => 'attendance'],function(){
+			Route::get('addjson',[ 'uses' => 'AttendanceController@getAddAttendanceJson']);
+			Route::get('listjson/{max}/{page}',[ 'uses' => 'AttendanceController@getListAttendanceJson']);
+			Route::get('attendancejson/{id}',[ 'uses' => 'AttendanceController@getAttendanceJson']);
+			Route::get('editjson',[ 'uses' => 'AttendanceController@getEditAttendanceJson']);
+			Route::get('deletejson/{id}',[ 'uses' => 'AttendanceController@getDeleteAttendanceJson']);
+
+		});
+		Route::group(['prefix' => 'check-attendance'], function(){
+			Route::get('index',['as'=> 'checkAttendanceIndex','uses'=>'CheckAttendanceController@index']);
+			
+		});
 	});
 });
 Route::group(['middleware'=>'isrolemanager'], function(){

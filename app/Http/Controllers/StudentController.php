@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
+use App\Http\Requests\StudentEditRequest;
 use App\Student;
 use App\Course;
 use App\CourseStudent;
@@ -87,6 +88,37 @@ class StudentController extends Controller
         $nations = Nation::select('id','name')->orderBy('name','ASC')->get();
         return view('admin.students.edit',['student'=>$student, 'nations'=>$nations]);
 
+    }
+    public function postStudentEditAdmin($id,StudentEditRequest $request){
+        $student = Student::findOrFail($id);
+        $student->firstname = $request->txtfirstname;
+        $student->lastname = $request->txtlastname;
+        $student->name = $request->txtlastname.' '.$request->txtfirstname;
+        $student->username = $request->txtusername;
+        $student->gender = $request->selectgender;
+
+        $student->nation_id = $request->selectnation;
+        $student->email = $request->txtemail;
+        $student->phone = $request->txtphone;
+        $student->parents_phone = $request->txtparentphone;
+        $student->dob = $request->txtdob;
+        $student->address = $request->txtaddress;
+
+        if($request->txtpassword != null){
+            $student->password = Hash::make($request->txtpassword);
+        }
+       
+        $student->save();
+        $url = "adminsites/student/detail/".$student->id;
+       // $url = "adminsites/student/detail/7";
+        return redirect($url)
+        ->with(['flash_level'=>'alert-success','flash_message' => 'Sửa học viên thành công'] );
+
+    }
+    public function getStudentDelete($id){
+        $student = Student::findOrFail($id);
+        $student->status = "delete";
+        $student->save();
     }
 
 }

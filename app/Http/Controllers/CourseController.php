@@ -85,7 +85,7 @@ class CourseController extends Controller
         return view('admin.courses.detail',['course'=>$course]);
     }
     public function getCourseStudentsListJsonAdmin($id){
-        $students = CourseStudent::join('students','students.id','=','course_student.student_id')->select('course_student.id','students.username','students.name','students.phone','students.parents_phone','course_student.course_id','course_student.student_id','course_student.created_at')->where('course_student.course_id','=',$id)->get();
+        $students = CourseStudent::join('students','students.id','=','course_student.student_id')->select('course_student.id','students.username','students.firstname','students.lastname','students.phone','students.parents_phone','course_student.course_id','course_student.student_id','course_student.created_at')->where('course_student.course_id','=',$id)->get();
         return json_encode($students);
     }
     public function getAllStudentsNotInCourseListJsonAdmin($id,Request $request){

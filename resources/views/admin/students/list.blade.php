@@ -4,7 +4,7 @@
 @endsection
 @section('title','Danh sách Học viên')
 @section('content')
-<div ng-controller="StudentController">
+<div ng-controller="StudentController" data-ng-init="getListStudent()">
     <div class="row">
         <div class="col-sm-8">
             <div class="form-group">

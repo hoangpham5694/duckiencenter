@@ -31,7 +31,10 @@ app.controller('StudentController', function($scope, $http, API,$timeout){
 		
 	 };
 
-	 getListStudents(1);
+	
+	 $scope.getListStudent = function(){
+	 	 getListStudents(1);
+	 }
 	 $scope.changeOrderBy = function(){
 	 	console.log("change");
 	 	getListStudents(1);
@@ -45,4 +48,21 @@ app.controller('StudentController', function($scope, $http, API,$timeout){
 	 $scope.getliststudent = function(page){
 	 	getListStudents(page);
 	 }
+	$scope.confirmDelete = function(id){
+		var isConfirmDelete = confirm('Bạn có chắc muốn xóa học viên này không');
+		if(isConfirmDelete){
+			$http.get(API + 'adminsites/student/delete/'+id).then(function successCallback (response){
+			console.log(response);
+			console.log($scope.page);
+			getListStudents($scope.page);
+		//	alert(response.data);
+			}  , function errorCallback(response) {
+			console.log(response);
+
+			}) ;
+		}else{
+			return false;
+		}
+	}
+
 });
