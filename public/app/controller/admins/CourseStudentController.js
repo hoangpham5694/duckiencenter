@@ -101,13 +101,14 @@ app.controller('CourseStudentController', function($scope, $http, API,$timeout){
 		var fulldate = $scope.studyDate;
 		var date = fulldate.getDate();
 		var month = fulldate.getMonth()+1;
-		var year = fulldate.getFullYear();;
+		var year = fulldate.getFullYear();
 		$scope.nameAttendance = "Buổi "+date+"-"+month+"-"+ year;
 	}
 
 	$scope.confirmAddAttendance = function(name, studyDate, state){
 		studyDateDay = studyDate.getDate();
 		studyDateMonth = studyDate.getMonth();
+		studyDateMonth++;
 		studyDateYear = studyDate.getFullYear();
 		switch(state){
 			case 'add':

@@ -173,7 +173,7 @@ Danh sách lớp {!! $course->name !!}
 
 
 </form>
-
+{% studyDate %}
 
       </div>
       <div class="modal-footer">

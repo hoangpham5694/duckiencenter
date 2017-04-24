@@ -110,8 +110,20 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 
 		});
 		Route::group(['prefix' => 'check-attendance'], function(){
-			Route::get('index',['as'=> 'checkAttendanceIndex','uses'=>'CheckAttendanceController@index']);
-			
+			Route::get('index',['as'=> 'checkAttendanceIndexAdmin','uses'=>'CheckAttendanceController@indexAdmin']);
+			Route::get('listattendancesofdatejson',['uses'=>'CheckAttendanceController@getListAttendancesOfDateJson']);
+			Route::get('detail/{id}',['uses'=>'CheckAttendanceController@getDetailAttendanceAdmin']);
+			Route::get('detailattendancejson/{id}',['uses'=>'CheckAttendanceController@getDetailAttdanceJson']);
+			Route::get('coursestudentslistjson/{courseid}',['uses'=>'CheckAttendanceController@getCourseStudentsListJson']);
+			Route::get('lockattendancejson/{id}',['uses'=>'CheckAttendanceController@getLockAttendanceJson']);
+			Route::get('liststudentsdebtjson/{id}',['uses'=>'CheckAttendanceController@getListStudentDebtJson']);
+	
+		});
+		Route::group(['prefix' => 'debt'], function(){
+			Route::get('debtofstudentjson/{studentid}',['uses'=>'DebtController@getDebtOfStudentJson']);
+			Route::get('removedebt/{debtid}',['uses'=>'DebtController@getRemoveDebt']);
+
+
 		});
 	});
 });
