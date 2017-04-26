@@ -29,7 +29,7 @@
     </div>
   </div>
       <div class="form-group">
-    <label class="control-label col-sm-3" >Chi nhánh:</label>
+    <label class="control-label col-sm-3" >Nhóm lớp:</label>
     <div class="col-sm-9">
     <select class="form-control" name="selectagency">
       @foreach($agencies as $agency)

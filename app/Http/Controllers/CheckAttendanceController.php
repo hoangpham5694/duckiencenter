@@ -13,6 +13,7 @@ use App\Course;
 use App\Attendance;
 use App\Debt;
 use App\Student;
+use App\Teacher;
 class CheckAttendanceController extends Controller
 {
     public function indexAdmin(){
@@ -83,6 +84,11 @@ class CheckAttendanceController extends Controller
             $money = $attendance->money;
           //  dd($students);
             $stdNum = 0;
+            $teacher = Teacher::join('salary_level','salary_level.id','=','teachers.salary_level_id')
+        ->select('teachers.id','teachers.amount','salary_level.percent')
+        ->where('teachers.id','=',$course->teacher_id)->first();
+        //dd($attendance);
+        //dd($teacher);
             foreach ($students as $key => $student) {
                 $stdNum++;
             # code...
@@ -94,6 +100,7 @@ class CheckAttendanceController extends Controller
                         $std->amount = $std->amount - $course->fee;
                         $money += $course->fee;
                      //   echo "money: ".$money;
+                        $teacher->amount = $teacher->amount+ $course->fee * $teacher->percent /100;
                         $std->save();
                     }else{
                         $debt = new Debt();
@@ -115,6 +122,7 @@ class CheckAttendanceController extends Controller
             $attendance->is_taught=1;
             $attendance->money = $money;
             $attendance->save();
+            $teacher->save();
             DB::commit();
         }catch(Exception $e){
              DB::rollback();

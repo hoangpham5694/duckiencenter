@@ -76,7 +76,9 @@ class StudentController extends Controller
 
     }
     public function getStudentDetailAdmin($id){
-        $student = Student::join('nations','nations.id','=','students.nation_id')->where('students.status','=','active')->findOrFail($id);
+        $student = Student::join('nations','nations.id','=','students.nation_id')
+        ->select('students.firstname','students.lastname','students.id','students.phone','students.dob','students.gender','students.email','students.address','students.parents_phone','students.amount','nations.name')
+        ->where('students.status','=','active')->findOrFail($id);
         $courses = CourseStudent::join('courses','courses.id','=','course_student.course_id')->join('teachers','teachers.id','=','courses.teacher_id') 
         ->select('courses.id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
         ->where('course_student.student_id','=',$id)->get();
@@ -119,6 +121,16 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $student->status = "delete";
         $student->save();
+    }
+    public function getStudentDetailJson($id){
+         $student = Student::findOrFail($id);
+         return $student;
+    }
+    public function getListCoursesOfStudentJson($studentid){
+         $courses = CourseStudent::join('courses','courses.id','=','course_student.course_id')->join('teachers','teachers.id','=','courses.teacher_id') 
+        ->select('courses.id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
+        ->where('course_student.student_id','=',$studentid)->get();
+        return $courses;
     }
 
 }

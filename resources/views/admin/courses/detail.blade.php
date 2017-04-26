@@ -17,10 +17,10 @@ Danh sách lớp {!! $course->name !!}
                 Tên lớp: {{ $course->name }}
             </li>
                          <li>
-                Giáo viên: {{ $course->teacher_name }}
+                Giáo viên:{{ $course->teacher_lastname}} {{ $course->teacher_firstname}}
             </li>
                          <li>
-                Chi nhánh: {{ $course->agency_name }}
+                Nhóm: {{ $course->agency_name }}
             </li>
                          <li>
                 Học viên: {% total %}/{{ $course->max_students }}

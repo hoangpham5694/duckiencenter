@@ -20,16 +20,25 @@ class CourseController extends Controller
     public function getCourseListJson(Request $request){
         $keyword = $request->keyword;
     	$numberRecord= $request->max;
+        $agencyId =$request->agencyid;
+        $teacherId = $request->teacherid;
     	$page = $request->page;
+
         $vitri =($page -1 ) * $numberRecord;
      //   $totalTeacher = Teacher::count();
     //    $numPages = $totalApp / $numberRecord +1;
-    	$data = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.name as teacher_name','courses.status')->where('courses.status','=','active')
-        ->where(function($query) use ($keyword){
-            $query->where('courses.name','LIKE','%'.$keyword.'%');
 
-        })
-        ->orderBy('courses.id','DESC')->limit($numberRecord)->offset($vitri)->get();
+           $data = Course::join('agencies','agencies.id','=','courses.agency_id')
+           ->join('teachers','teachers.id','=','courses.teacher_id')
+           ->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.name as teacher_name','courses.status')
+            ->where('courses.status','=','active')
+            ->where(function($query) use ($keyword){
+            $query->where('courses.name','LIKE','%'.$keyword.'%');
+            })
+            ->where('courses.agency_id','LIKE', $agencyId)
+            ->where('courses.teacher_id','LIKE', $teacherId)
+            ->orderBy('courses.id','DESC')->limit($numberRecord)->offset($vitri)->get();
+        
     	return $data;
     }
     public function getCourseTotalJson(){
@@ -80,7 +89,7 @@ class CourseController extends Controller
          $course->save();
     }
     public function getCourseDetailAdmin($id){
-        $course = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.name as teacher_name','courses.status')->where('courses.status','=','active')->find($id);
+        $course = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname','courses.status')->where('courses.status','=','active')->find($id);
 
         return view('admin.courses.detail',['course'=>$course]);
     }
@@ -110,7 +119,11 @@ class CourseController extends Controller
         return json_encode($students);
     }
     public function getAddStudentToCourseAdmin($courseid,$studentid){
-        
+        $countCourseStudents = CourseStudent::where('course_id','=',$courseid)
+        ->where('student_id','=',$studentid)->count();
+        if($countCourseStudents >0){
+            return "Học viên đang học tại lớp này";
+        }
         $course = Course::select('max_students')->where('id','=',$courseid)->first();;
 
     //    dd(CourseStudent::where('course_id','=',$courseid)->count());
@@ -131,6 +144,10 @@ class CourseController extends Controller
 
     public function getFeeListCoursesAdmin(){
         return view('admin.fees.list_course');
+    }
+    public function getListAgenciesJson(){
+        $agencies = Agency::select('id','name')->get();
+        return $agencies;
     }
 
 }

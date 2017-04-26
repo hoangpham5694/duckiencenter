@@ -76,7 +76,8 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::get('listallstudentsjson/{id}',['as' => 'getAllStudentsNotInCourseListJsonAdmin', 'uses' => 'CourseController@getAllStudentsNotInCourseListJsonAdmin']);
 			Route::get('addstudenttosourse/{courseid}/{studentid}',['as' => 'getAddStudentToCourseAdmin', 'uses' => 'CourseController@getAddStudentToCourseAdmin']);
 			Route::get('deletestudentcourse/{id}',['as' => 'getDeleteStudentCourseAdmin', 'uses' => 'CourseController@getDeleteStudentCourseAdmin']);
-
+			Route::get('listagenciesjson',['uses' => 'CourseController@getListAgenciesJson']);
+			
 
 		});
 		Route::group(['prefix' => 'fee'],function(){
@@ -99,6 +100,8 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::get('edit/{id}',['as' => 'getStudentEditAdmin', 'uses' => 'StudentController@getStudentEditlAdmin']);
 			Route::post('edit/{id}',['as' => 'postStudentEditAdmin', 'uses' => 'StudentController@postStudentEditAdmin']);
 			Route::get('delete/{id}',['as' => 'getStudentDeleteAdmin', 'uses' => 'StudentController@getStudentDelete']);
+			Route::get('detailjson/{id}',['uses'=> 'StudentController@getStudentDetailJson']);
+			Route::get('listcoursesofstudentjson/{studentid}',['uses'=> 'StudentController@getListCoursesOfStudentJson']);
 
 		});
 		Route::group(['prefix' => 'attendance'],function(){
@@ -125,6 +128,12 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 
 
 		});
+		Route::group(['prefix' => 'payin'], function(){
+			Route::get('index',['uses'=>'PayinController@getIndexPayinAdmin']);
+			
+
+		});
+
 	});
 });
 Route::group(['middleware'=>'isrolemanager'], function(){

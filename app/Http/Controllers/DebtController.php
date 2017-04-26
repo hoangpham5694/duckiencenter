@@ -31,6 +31,7 @@ class DebtController extends Controller
     	$teacher = Teacher::join('salary_level','salary_level.id','=','teachers.salary_level_id')
     	->select('teachers.id','teachers.amount','salary_level.percent')
     	->where('teachers.id','=',$attendance->teacher_id)->first();
+      //  dd($teacher);
     	if($student->amount >= $debt->money){
     		$student->amount = $student->amount - $debt->money;
     		$attendance->money = $attendance->money + $debt->money;
@@ -43,12 +44,14 @@ class DebtController extends Controller
     		->where('attendances.course_id','=',$course->id)
     		->where('debts.student_id','=',$student->id)
     		->count();
+           // echo $countDebts;
     		if($countDebts == 0){
     			$courseStudent = CourseStudent::select('id','status')
     			->where('course_id','=',$course->id)
     			->where('student_id','=',$student->id)
     			->first();
     			$courseStudent->status = "active";
+                $courseStudent->save();
     		}
     		return "Thanh toán nợ thành công";
     	}

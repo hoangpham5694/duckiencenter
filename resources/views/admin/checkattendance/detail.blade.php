@@ -174,9 +174,15 @@ Chi tiết buổi học {{ $attendance->name }}
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{%titleModalDebt%}</h4>
+        <h4 class="modal-title" id="myModalLabel">Thanh toán nợ</h4>
       </div>
       <div class="modal-body">
+        <ul>
+          <li><strong>Học viên</strong>: {% studentDetail.lastname %} {% studentDetail.firstname %}</li>
+          <li><strong>Mã học viên</strong>: {% studentDetail.username %}</li>
+          <li><strong>Số dư</strong>: {% studentDetail.amount | number:0 %}VND</li>
+        </ul>
+        <hr>
         <table class="table table-striped">
     <thead>
                                     <tr>
@@ -188,17 +194,17 @@ Chi tiết buổi học {{ $attendance->name }}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="debtOsStudent in debtOfStudents"  >
-                                        <td>{% debtOsStudent.name %}</td>
-                                        <td>{% debtOsStudent.course_name %} </td>
+                                    <tr ng-repeat="debtOfStudent in debtOfStudents"  >
+                                        <td>{% debtOfStudent.name %}</td>
+                                        <td>{% debtOfStudent.course_name %} </td>
                                         <td>
-                                            {% debtOsStudent.money %}
+                                            {% debtOfStudent.money| number:0 %}VND
                                         </td>
                                       
                                   
                                         <td>
                                    
-    <button class="btn btn-primary btn-xs" ng-click="removeDebt(debtOsStudent.id)"><i class="fa fa-usd" aria-hidden="true"></i>Thanh toán</button>
+    <button class="btn btn-primary btn-xs" ng-click="removeDebt(debtOfStudent.id)"><i class="fa fa-usd" aria-hidden="true"></i>Thanh toán</button>
                                        
                                      
                                           </td>
