@@ -1,11 +1,11 @@
 @extends('admin.master')
 @section('header')
-    <title>Admin::Danh sách giáo viên</title>
+    <title>Admin::Thanh toán lương</title>
 @endsection
-@section('title','Danh sách giáo viên')
+@section('title','Thanh toán lương giáo viên')
 @section('content')
 <div ng-controller="TeacherController" data-ng-init="getlistteacher(1)">
-        <div class="row">
+    <div class="row">
         <div class="col-sm-8">
             <div class="form-group">
     <label for="inputEmail3" class="col-sm-3 control-label">Sắp xếp theo:</label>
@@ -45,20 +45,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                	<tr ng-repeat="teacher in teachers">
-                                		<td>{% teacher.username %}</td>
-                                		<td>{% teacher.lastname %}</td>
+                                  <tr ng-repeat="teacher in teachers">
+                                    <td>{% teacher.username %}</td>
+                                    <td>{% teacher.lastname %}</td>
                                         <td>{% teacher.firstname %}</td>
-                                		<td>{% teacher.email %}</td>
-                                		<td>{% teacher.phone %}</td>
+                                    <td>{% teacher.email %}</td>
+                                    <td>{% teacher.phone %}</td>
                           
-                                		<td>
-                                            <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/teacher/edit') !!}/{% teacher.id %}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    <td>
+                                           <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/payout/add') !!}/{% teacher.id %}">
+                                        <i class="fa fa-credit-card-alt" aria-hidden="true"> </i> Thanh toán
+                                      </a>
                                             </a>
-    <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(teacher.id)">  <i class="fa fa-trash" aria-hidden="true"></i></button>
+
                                           </td>
-                                	</tr>
+                                  </tr>
                                 </tbody>
 </table>
 

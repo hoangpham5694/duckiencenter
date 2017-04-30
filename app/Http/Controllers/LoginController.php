@@ -23,8 +23,8 @@ class LoginController extends Controller
     }
     public function postLogin(LoginRequest $request){
     	 $login = ['username' => $request->txtUsername,
-    	 'password' => $request->txtPassword
-            
+    	 'password' => $request->txtPassword,
+            'status'=> 'active'
          ];
     	switch ($request->selectRole) {
     		case 'teacher':
@@ -45,7 +45,8 @@ class LoginController extends Controller
             case 'admin':
                 $login = ['username' => $request->txtUsername,
                 'password' => $request->txtPassword,
-                'role' => 1
+                'role' => 1,
+                'status' =>'active'
                 ];
                 if (Auth::guard('users')->attempt($login)){
                     echo "you are admin";

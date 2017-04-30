@@ -130,7 +130,32 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 		});
 		Route::group(['prefix' => 'payin'], function(){
 			Route::get('index',['uses'=>'PayinController@getIndexPayinAdmin']);
-			
+			Route::get('add/{studentid}',['uses'=>'PayinController@getAddPayinAdmin']);
+			Route::post('add/{studentid}',['uses'=>'PayinController@postAddPayinAdmin']);
+			Route::get('detail/{id}',['uses'=>'PayinController@getDetailPayinAdmin']);
+			Route::get('bill/{id}',['uses'=>'PayinController@getBillPayinAdmin']);
+		});
+		Route::group(['prefix' => 'payout'], function(){
+			Route::get('index',['uses'=>'PayoutController@getIndexPayoutAdmin']);
+			Route::get('add/{teacherid}',['uses'=>'PayoutController@getAddPayoutAdmin']);
+			Route::post('add/{studentid}',['uses'=>'PayoutController@postAddPayoutAdmin']);
+			Route::get('detail/{id}',['uses'=>'PayoutController@getDetailPayoutAdmin']);
+			Route::get('bill/{id}',['uses'=>'PayoutController@getBillPayoutAdmin']);
+		});
+		Route::group(['prefix' => 'user'], function(){
+			Route::get('list',['uses'=>'UserController@getListUser']);
+			Route::get('listjson/{max}/{page}',[ 'uses' => 'UserController@getListStudentJson']);
+			Route::get('totaljson',[ 'uses' => 'UserController@getStudentTotalJson']);
+			Route::get('add',[ 'uses' => 'UserController@getAddUserAdmin']);
+			Route::get('checkunique/{username?}',[ 'uses' => 'UserController@getCheckUnique']);
+			Route::post('add',[ 'uses' => 'UserController@postAddUserAdmin']);
+			Route::get('edit/{id}',['uses' => 'UserController@getEditUserAdmin']);
+			Route::post('edit/{id}',['uses' => 'UserController@postEditUserAdmin']);
+		});
+		Route::group(['prefix' => 'account'], function(){
+			Route::get('profile',['uses'=>'AccountController@getProfileAdmin']);
+			Route::get('edit',['uses'=>'AccountController@getEditAdmin']);
+			Route::post('edit',['uses'=>'AccountController@postEditUser']);
 
 		});
 

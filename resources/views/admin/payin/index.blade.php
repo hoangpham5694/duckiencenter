@@ -1,17 +1,17 @@
 @extends('admin.master')
 @section('header')
-    <title>Admin::Danh sách giáo viên</title>
+    <title>Admin::Thu học phí</title>
 @endsection
-@section('title','Danh sách giáo viên')
+@section('title','Thu học phí')
 @section('content')
-<div ng-controller="TeacherController" data-ng-init="getlistteacher(1)">
-        <div class="row">
+<div ng-controller="StudentController" data-ng-init="getListStudent()">
+    <div class="row">
         <div class="col-sm-8">
             <div class="form-group">
     <label for="inputEmail3" class="col-sm-3 control-label">Sắp xếp theo:</label>
     <div class="col-sm-4">
       <select name="" ng-model="orderby" class="form-control" ng-change="changeOrderBy()" id="">
-          <option value="username">Mã giáo viên</option>
+          <option value="username">Mã học viên</option>
           <option value="firstname">Họ</option>
           <option value="lastname">Tên</option>
       </select>
@@ -38,25 +38,26 @@
                                         <th>Mã</th>
                                         <th>Họ</th>
                                         <th>Tên</th>
-                                        <th>Email</th>
+                                        <th>Giới tính</th>
                                         <th>Điện thoại</th>
                                         
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                	<tr ng-repeat="teacher in teachers">
-                                		<td>{% teacher.username %}</td>
-                                		<td>{% teacher.lastname %}</td>
-                                        <td>{% teacher.firstname %}</td>
-                                		<td>{% teacher.email %}</td>
-                                		<td>{% teacher.phone %}</td>
+                                	<tr ng-repeat="student in students">
+                                		<td>{% student.username %}</td>
+                                		<td>{% student.lastname %}</td>
+                                        <td>{% student.firstname %}</td>
+                                		<td>{% student.gender %}</td>
+                                		<td>{% student.phone %}</td>
                           
                                 		<td>
-                                            <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/teacher/edit') !!}/{% teacher.id %}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                            </a>
-    <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(teacher.id)">  <i class="fa fa-trash" aria-hidden="true"></i></button>
+                                      <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/payin/add') !!}/{% student.id %}">
+                                        <i class="fa fa-credit-card-alt" aria-hidden="true"> Nạp tiền</i>
+                                      </a>
+
+                                         
                                           </td>
                                 	</tr>
                                 </tbody>
@@ -64,12 +65,12 @@
 
 <div class="btn-toolbar" role="toolbar" aria-label="...">
   <div class="btn-group" role="group" aria-label="...">
-  	<button type="button" ng-repeat="n in [1,total] | makeRange" ng-click="getlistteacher(n)" class="btn btn-default" ng-disabled="page == n">{% n %}</button>
+  	<button type="button" ng-repeat="n in [1,total] | makeRange" ng-click="getliststudent(n)" class="btn btn-default" ng-disabled="page == n">{% n %}</button>
   </div>
 
 </div>
 
 @endsection
 @section('footer')
-  <script src="<?php echo asset('public/app/controller/admins/TeacherController.js') ; ?>"></script>  
+  <script src="<?php echo asset('public/app/controller/admins/StudentController.js') ; ?>"></script>  
 @endsection

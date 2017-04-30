@@ -15,12 +15,25 @@ class TeacherController extends Controller
     public function getTeacherList(){
     	return view('admin.teachers.list');
     }
-    public function getTeacherListJson($max, $page){
+    public function getTeacherListJson($max, $page,Request $request){
+        $key = $request->key;
+        $orderby = $request->orderby;
+        $sort = $request->sort;
     	$numberRecord= $max;
         $vitri =($page -1 ) * $numberRecord;
      //   $totalTeacher = Teacher::count();
     //    $numPages = $totalApp / $numberRecord +1;
-    	$data = Teacher::select('id','username','email','firstname','lastname','dob','address','phone','status')->where('status','=','active')->orderBy('name','ASC')->limit($numberRecord)->offset($vitri)->get();
+    	$data = Teacher::select('id','username','email','firstname','lastname','dob','address','phone','status')
+        ->where('status','=','active')
+        ->where(function($query) use ($key){
+            $query->where('username','LIKE','%'.$key.'%')
+            ->orWhere('firstname','LIKE','%'.$key.'%')
+            ->orWhere('lastname','LIKE','%'.$key.'%')
+            ->orWhere('email','LIKE','%'.$key.'%')
+            ->orWhere('phone','LIKE','%'.$key.'%');
+        })
+        ->orderBy($orderby,$sort)
+        ->limit($numberRecord)->offset($vitri)->get();
     	return $data;
     }
     public function getTeacherTotalJson(){

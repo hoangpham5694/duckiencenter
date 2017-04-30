@@ -1,6 +1,9 @@
 app.controller('TeacherController', function($scope, $http, API,$timeout){	
 	var maxRecord = 20;
 	$scope.maxRecord = maxRecord;
+	$scope.sort = "asc";
+	$scope.orderby = "lastname";
+	$scope.keyword = "";
 	 var getTotalTeachers = function(){
 	 	$http.get(API + 'adminsites/teacher/totaljson').then(function successCallback (response){
 	
@@ -15,7 +18,7 @@ app.controller('TeacherController', function($scope, $http, API,$timeout){
   		}) ;
 	 }
 	var getListTeachers = function (max, page){
-		$http.get(API + 'adminsites/teacher/listjson/'+max+'/'+page).then(function successCallback (response){
+		$http.get(API + 'adminsites/teacher/listjson/'+$scope.maxRecord+'/'+page+"?orderby="+$scope.orderby+"&sort="+$scope.sort+"&key="+$scope.keyword).then(function successCallback (response){
 		getTotalTeachers();
 		$scope.teachers = response.data;
 		$scope.page = page;
@@ -28,7 +31,7 @@ app.controller('TeacherController', function($scope, $http, API,$timeout){
 		
 	 };
 
-	 getListTeachers(maxRecord,1);
+	 //getListTeachers(maxRecord,1);
 
 	 $scope.getlistteacher = function(page){
 	 	
@@ -50,5 +53,17 @@ app.controller('TeacherController', function($scope, $http, API,$timeout){
 			return false;
 		}
 	}
+
+	 $scope.changeOrderBy = function(){
+	 	console.log("change");
+	 	getListTeachers(1);
+	 }
+	 $scope.changeSort = function(){
+	 	getListTeachers(1);
+	 }
+	 $scope.changeKey = function(){
+	 	getListTeachers(1);
+	 }
+
 
 });
