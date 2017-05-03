@@ -50,6 +50,10 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 		Route::get('/', function(){
     		return view('admin.dashboard.main');
     	});
+    	Route::group(['prefix' => 'agency'], function(){
+    		Route::get('listsimplejson',['uses' => 'AgencyController@getAgencyListSimpleJson']);
+
+    	});
 		Route::group(['prefix' => 'teacher'], function(){
 			Route::get('list',['as' => 'getTeacherListAdmin', 'uses' => 'TeacherController@getTeacherList']);
 			Route::get('listjson/{max}/{page}',['as' => 'getTeacherListJsonAdmin', 'uses' => 'TeacherController@getTeacherListJson']);
@@ -60,7 +64,8 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::post('edit/{id}',['as' => 'postTeacherEditAdmin', 'uses' => 'TeacherController@postTeacherEdit']);
 			Route::get('delete/{id}',['as' => 'getTeacherDeleteAdmin', 'uses' => 'TeacherController@getTeacherDelete']);
 			Route::get('detail/{id}',['as' => 'getTeacherDetailAdmin', 'uses' => 'TeacherController@getTeacherDetailAdmin']);
-
+			Route::get('listsimplejson',['uses' => 'TeacherController@getTeacherListSimpleJson']);
+	
 		});
 		Route::group(['prefix' => 'course'], function(){
 			Route::get('list',['as' => 'getCourseListAdmin', 'uses' => 'CourseController@getCourseListAdmin']);
@@ -164,10 +169,90 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 Route::group(['middleware'=>'isrolemanager'], function(){
 	Route::group(['prefix' => 'managersites'], function(){
 		//Route::get('/',['as' => 'getStatistics', 'uses' => 'AdminController@getStatistics']);
+		Route::group(['prefix' => 'debt'], function(){
+			Route::get('debtofstudentjson/{studentid}',['uses'=>'DebtController@getDebtOfStudentJson']);
+			Route::get('removedebt/{debtid}',['uses'=>'DebtController@getRemoveDebt']);
+
+
+		});
 		Route::get('/', function(){
     		return view('manager.dashboard.main');
 
     	});
+    	Route::group(['prefix' => 'agency'], function(){
+    		Route::get('listsimplejson',['uses' => 'AgencyController@getAgencyListSimpleJson']);
+
+    	});
+    	Route::group(['prefix' => 'teacher'], function(){
+			Route::get('list',['as' => 'getTeacherListManager', 'uses' => 'TeacherController@getTeacherListManager']);
+			Route::get('listjson/{max}/{page}',['as' => 'getTeacherListJsonAdmin', 'uses' => 'TeacherController@getTeacherListJson']);
+			Route::get('totaljson',['as' => 'getTeacherTotalJsonAdmin', 'uses' => 'TeacherController@getTeacherTotalJson']);
+			Route::get('detail/{id}',['as' => 'getTeacherDetailManager', 'uses' => 'TeacherController@getTeacherDetailManager']);
+			Route::get('listsimplejson',['uses' => 'TeacherController@getTeacherListSimpleJson']);
+
+		});
+		Route::group(['prefix' => 'student'],function(){
+			Route::get('list',['as' => 'getListStudentManager', 'uses' => 'StudentController@getListStudentManager']);
+			Route::get('listjson/{max}/{page}',['as' => 'getListStudentJsonAdmin', 'uses' => 'StudentController@getListStudentJson']);
+			Route::get('totaljson',['as' => 'getStudentTotalJsonAdmin', 'uses' => 'StudentController@getStudentTotalJson']);
+			Route::get('detail/{id}',['as' => 'getStudentDetailManager', 'uses' => 'StudentController@getStudentDetailManager']);
+			Route::get('detailjson/{id}',['uses'=> 'StudentController@getStudentDetailJson']);
+			Route::get('listcoursesofstudentjson/{studentid}',['uses'=> 'StudentController@getListCoursesOfStudentJson']);
+			Route::get('delete/{id}',['as' => 'getStudentDeleteAdmin', 'uses' => 'StudentController@getStudentDelete']);
+			Route::get('edit/{id}',['as' => 'getStudentEditManager', 'uses' => 'StudentController@getStudentEditManager']);
+			Route::post('edit/{id}',['as' => 'postStudentEditManager', 'uses' => 'StudentController@postStudentEditManager']);
+			Route::get('add',['as' => 'getAddStudentManager', 'uses' => 'StudentController@getAddStudentManager']);
+			Route::get('checkunique/{username?}',[ 'uses' => 'StudentController@getCheckUnique']);
+			Route::post('add',['as' => 'postAddStudentManager', 'uses' => 'StudentController@postAddStudentManager']);
+
+		});
+		Route::group(['prefix' => 'course'], function(){
+			Route::get('list',['as' => 'getCourseListManager', 'uses' => 'CourseController@getCourseListManager']);
+			Route::get('listjson',['as' => 'getCourseListJsonAdmin', 'uses' => 'CourseController@getCourseListJson']);
+			Route::get('totaljson',['as' => 'getCourseTotalJsonAdmin', 'uses' => 'CourseController@getCourseTotalJson']);
+
+			Route::get('detail/{id}',['as' => 'getCourseDetailAdmin', 'uses' => 'CourseController@getCourseDetailManager']);
+			Route::get('listcoursestudentsjson/{id}',['as' => 'getCourseStudentsListJsonAdmin', 'uses' => 'CourseController@getCourseStudentsListJsonAdmin']);
+			Route::get('listallstudentsjson/{id}',['as' => 'getAllStudentsNotInCourseListJsonAdmin', 'uses' => 'CourseController@getAllStudentsNotInCourseListJsonAdmin']);
+			Route::get('addstudenttosourse/{courseid}/{studentid}',['as' => 'getAddStudentToCourseAdmin', 'uses' => 'CourseController@getAddStudentToCourseAdmin']);
+			Route::get('deletestudentcourse/{id}',['as' => 'getDeleteStudentCourseAdmin', 'uses' => 'CourseController@getDeleteStudentCourseAdmin']);
+			Route::get('listagenciesjson',['uses' => 'CourseController@getListAgenciesJson']);
+			
+
+		});
+		Route::group(['prefix' => 'attendance'],function(){
+			Route::get('addjson',[ 'uses' => 'AttendanceController@getAddAttendanceJson']);
+			Route::get('listjson/{max}/{page}',[ 'uses' => 'AttendanceController@getListAttendanceJson']);
+			Route::get('attendancejson/{id}',[ 'uses' => 'AttendanceController@getAttendanceJson']);
+			Route::get('editjson',[ 'uses' => 'AttendanceController@getEditAttendanceJson']);
+			Route::get('deletejson/{id}',[ 'uses' => 'AttendanceController@getDeleteAttendanceJson']);
+
+		});
+		Route::group(['prefix' => 'check-attendance'], function(){
+			Route::get('index',['as'=> 'checkAttendanceIndexManager','uses'=>'CheckAttendanceController@indexManager']);
+			Route::get('listattendancesofdatejson',['uses'=>'CheckAttendanceController@getListAttendancesOfDateJson']);
+			Route::get('detail/{id}',['uses'=>'CheckAttendanceController@getDetailAttendanceManager']);
+			Route::get('detailattendancejson/{id}',['uses'=>'CheckAttendanceController@getDetailAttdanceJson']);
+			Route::get('coursestudentslistjson/{courseid}',['uses'=>'CheckAttendanceController@getCourseStudentsListJson']);
+			Route::get('lockattendancejson/{id}',['uses'=>'CheckAttendanceController@getLockAttendanceJson']);
+			Route::get('liststudentsdebtjson/{id}',['uses'=>'CheckAttendanceController@getListStudentDebtJson']);
+	
+		});
+		Route::group(['prefix' => 'payin'], function(){
+			Route::get('index',['uses'=>'PayinController@getIndexPayinManager']);
+			Route::get('add/{studentid}',['uses'=>'PayinController@getAddPayinManager']);
+			Route::post('add/{studentid}',['uses'=>'PayinController@postAddPayinManager']);
+			Route::get('detail/{id}',['uses'=>'PayinController@getDetailPayinManager']);
+			Route::get('bill/{id}',['uses'=>'PayinController@getBillPayinManager']);
+		});
+		Route::group(['prefix' => 'payout'], function(){
+			Route::get('/',['uses'=>'PayoutController@getIndexPayoutManager']);
+			Route::get('index',['uses'=>'PayoutController@getIndexPayoutManager']);
+			Route::get('add/{teacherid}',['uses'=>'PayoutController@getAddPayoutManager']);
+			Route::post('add/{studentid}',['uses'=>'PayoutController@postAddPayoutManager']);
+			Route::get('detail/{id}',['uses'=>'PayoutController@getDetailPayoutManager']);
+			Route::get('bill/{id}',['uses'=>'PayoutController@getBillPayoutManager']);
+		});
 	/*	Route::group(['prefix' => 'course'], function(){
 			Route::get('list',['as' => 'getCourseListAdmin', 'uses' => 'CourseController@getCourseList']);
 			Route::get('listjson',['as' => 'getCourseListJsonAdmin', 'uses' => 'CourseController@getCourseListJson']);

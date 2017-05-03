@@ -53,6 +53,7 @@
                                 		<td>{% teacher.phone %}</td>
                           
                                 		<td>
+                                      
                                             <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/teacher/edit') !!}/{% teacher.id %}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>

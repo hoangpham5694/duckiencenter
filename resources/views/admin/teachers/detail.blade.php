@@ -88,7 +88,7 @@
 <div class="row">
   <div class="col-sm-3"><strong>Các lớp đang dạy: </strong></div>
    <div class="col-sm-9">
-    <ul>
+    <ul   class="courses">
       @foreach($courses as $course)
         <li>
           {{ $course->name }}

@@ -119,7 +119,7 @@
     <tr ng-repeat="course in courses">
       <td>
      
-       {% course.id%}
+       {% course.course_id%}
 
       </td>
       <td>
@@ -130,6 +130,9 @@
       </td>
             <td>
     {% course.teacher_lastname%} {% course.teacher_firstname%}
+      </td>
+      <td>
+        <button class="btn btn-danger" ng-click="deleteCourseStudent(course.id)">Rời lớp</button>
       </td>
     </tr>
 

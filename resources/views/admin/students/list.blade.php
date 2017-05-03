@@ -53,6 +53,9 @@
                                 		<td>{% student.phone %}</td>
                           
                                 		<td>
+                                                    <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/student/detail') !!}/{% student.id %}">
+                                              <i class="fa fa-address-card" aria-hidden="true"></i> Chi tiết
+                                            </a>
                                             <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/student/edit') !!}/{% student.id %}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>

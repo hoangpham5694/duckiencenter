@@ -92,7 +92,11 @@ Danh sách lớp {!! $course->name !!}
                                       
                                         <td></td>
                                         <td>
+                                           <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/check-attendance/detail') !!}/{% attendance.id %}">
+                                                <i class="glyphicon glyphicon-ok" aria-hidden="true"></i> Kiểm tra
+                                            </a>
                                           <div ng-if="attendance.is_taught ==0">
+                                                  
                                                    <a class="btn btn-xs btn-primary" ng-click="modalAttendance('edit',attendance.id)" >
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </a>

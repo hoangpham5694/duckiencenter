@@ -16,6 +16,10 @@ class PayoutController extends Controller
     {
     	return view('admin.payout.index');
     }
+    public function getIndexPayoutManager()
+    {
+        return view('manager.payout.index');
+    }
     public function getAddPayoutAdmin($teacherid)
     {
     	$teacher = Teacher::findOrFail($teacherid);
@@ -54,6 +58,48 @@ class PayoutController extends Controller
             return "Lỗi trong quá tình xử lý";
         }
     }
+
+public function getAddPayoutManager($teacherid)
+    {
+        $teacher = Teacher::findOrFail($teacherid);
+        $user = Auth::guard('users')->user();
+        return view('manager.payout.add',['teacher'=>$teacher,'user'=>$user]);
+    }
+    public function postAddPayoutManager(PayoutAddRequest $request, $teacherid)
+    {
+        
+        try {
+            DB::beginTransaction();
+            $teacher = Teacher::findOrFail($teacherid);
+            $user = Auth::guard('users')->user();
+            $payout = new Payout();
+            $payout->teacher_id = $teacher->id;
+            $payout->user_id = $user->id;
+            if($request->txtpaymoney > $teacher->amount){
+                return back()->with(['flash_level'=>'alert-danger','flash_message' => 'Số tiền vượt quá số dư trong tài khoản'] );
+                //echo $request->txtpaymoney."---".$teacher->amount;
+            //  return "Ssố tiền hơn mức cho phép";
+            }
+
+            $payout->paid_money = $request->txtpaymoney;
+            $payout->amount = $teacher->amount - $request->txtpaymoney;
+            $payout->is_paid = 1;
+            $teacher->amount = $teacher->amount - $request->txtpaymoney;
+            $payout->save();
+            $teacher->save();
+            DB::commit();
+           // $url = "adminsites/payin/detail/"+$payin->id;
+            return redirect()->action('PayoutController@getDetailPayoutManager',['id'=>$payout->id]);
+        //  return "Xử lý thành công";
+        } catch (Exception $e) {
+           // printf $e;
+            DB::rollback();
+            return "Lỗi trong quá tình xử lý";
+        }
+    }
+
+
+
     public function getDetailPayoutAdmin($id)
     {
         $payout = Payout::join('teachers','teachers.id','=','payout.teacher_id')
@@ -71,5 +117,23 @@ class PayoutController extends Controller
         ->where('payout.id','=',$id)->first();
 
         return view('admin.payout.bill',['payout'=>$payout]);
+    }
+    public function getDetailPayoutManager($id)
+    {
+        $payout = Payout::join('teachers','teachers.id','=','payout.teacher_id')
+        ->join('users','users.id','=','payout.user_id')
+        ->select('payout.id','payout.is_paid','teachers.username','teachers.firstname','teachers.lastname','users.name','payout.paid_money','payout.amount','payout.created_at')
+        ->where('payout.id','=',$id)->first();
+
+        return view('manager.payout.detail',['payout'=>$payout]);
+    }
+    public function getBillPayOutManager($id)
+    {
+         $payout = Payout::join('teachers','teachers.id','=','payout.teacher_id')
+        ->join('users','users.id','=','payout.user_id')
+        ->select('payout.id','payout.is_paid','teachers.username','teachers.firstname','teachers.lastname','users.name','payout.paid_money','payout.amount','payout.created_at')
+        ->where('payout.id','=',$id)->first();
+
+        return view('manager.payout.bill',['payout'=>$payout]);
     }
 }

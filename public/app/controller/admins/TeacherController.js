@@ -18,7 +18,8 @@ app.controller('TeacherController', function($scope, $http, API,$timeout){
   		}) ;
 	 }
 	var getListTeachers = function (max, page){
-		$http.get(API + 'adminsites/teacher/listjson/'+$scope.maxRecord+'/'+page+"?orderby="+$scope.orderby+"&sort="+$scope.sort+"&key="+$scope.keyword).then(function successCallback (response){
+		var url =API + 'adminsites/teacher/listjson/'+max+'/'+page+"?orderby="+$scope.orderby+"&sort="+$scope.sort+"&key="+$scope.keyword;
+		$http.get(url).then(function successCallback (response){
 		getTotalTeachers();
 		$scope.teachers = response.data;
 		$scope.page = page;
@@ -54,15 +55,15 @@ app.controller('TeacherController', function($scope, $http, API,$timeout){
 		}
 	}
 
-	 $scope.changeOrderBy = function(){
+ $scope.changeOrderBy = function(){
 	 	console.log("change");
-	 	getListTeachers(1);
+	 	getListTeachers($scope.maxRecord,1);
 	 }
 	 $scope.changeSort = function(){
-	 	getListTeachers(1);
+	 	getListTeachers($scope.maxRecord,1);
 	 }
 	 $scope.changeKey = function(){
-	 	getListTeachers(1);
+	 	getListTeachers($scope.maxRecord,1);
 	 }
 
 

@@ -71,7 +71,7 @@
     </div>
   </div>
       <div class="form-group">
-    <label class="control-label col-sm-3"  for="description">Mô tả:</label>
+    <label class="control-label col-sm-3"  for="description">Lịch học:</label>
     <div class="col-sm-9">
 
  <textarea class="form-control" rows="5" name="txtDescription" id="description" placeholder="Mô tả khóa học">{{ $course['description'] }}</textarea>

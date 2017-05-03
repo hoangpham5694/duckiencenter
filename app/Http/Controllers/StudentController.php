@@ -17,6 +17,10 @@ class StudentController extends Controller
     public function getListStudentAdmin(){
     	return view('admin.students.list');
     }
+    public function getListStudentManager()
+    {
+        return view('manager.students.list');
+    }
     public function getListStudentJson($max, $page, Request $request){
     	$numberRecord= $max;
         $vitri =($page -1 ) * $numberRecord;
@@ -43,6 +47,11 @@ class StudentController extends Controller
         $nations = Nation::select('id','name')->orderBy('name','ASC')->get();
         return view('admin.students.add', ['nations'=> $nations]);
     }
+    public function getAddStudentManager(){
+        $nations = Nation::select('id','name')->orderBy('name','ASC')->get();
+        return view('manager.students.add', ['nations'=> $nations]);
+    }
+
     public function getCheckUnique($username = ""){
         if($username == "") return "false";
         $students = Student::where('username','=',$username)->count();
@@ -75,6 +84,30 @@ class StudentController extends Controller
         ->with(['flash_level'=>'alert-success','flash_message' => 'Thêm học viên thành công'] );
 
     }
+    public function postAddStudentManager(AddStudentRequest $request){
+        $student = new Student();
+        $student->firstname = $request->txtfirstname;
+        $student->lastname = $request->txtlastname;
+        $student->name = $request->txtlastname.' '.$request->txtfirstname;
+        $student->username = $request->txtusername;
+        $student->gender = $request->selectgender;
+        $student->username = $request->txtusername;
+        $student->nation_id = $request->selectnation;
+        $student->email = $request->txtemail;
+        $student->phone = $request->txtphone;
+        $student->parents_phone = $request->txtparentphone;
+        $student->dob = $request->txtdob;
+        $student->address = $request->txtaddress;
+        $student->password = Hash::make($request->txtusername);
+        $student->status= 'active';
+        $student->save();
+        $lastInsertId =  $student->id;
+        $url = "managersites/student/detail/".$lastInsertId;
+       // $url = "adminsites/student/detail/7";
+        return redirect($url)
+        ->with(['flash_level'=>'alert-success','flash_message' => 'Thêm học viên thành công'] );
+
+    }
     public function getStudentDetailAdmin($id){
         $student = Student::join('nations','nations.id','=','students.nation_id')
         ->select('students.firstname','students.lastname','students.id','students.phone','students.dob','students.gender','students.email','students.address','students.parents_phone','students.amount','nations.name')
@@ -84,6 +117,16 @@ class StudentController extends Controller
         ->where('course_student.student_id','=',$id)->get();
         //dd($courses);
         return view('admin.students.detail',['student'=>$student,'courses'=>$courses]);
+    }
+    public function getStudentDetailManager($id){
+        $student = Student::join('nations','nations.id','=','students.nation_id')
+        ->select('students.firstname','students.lastname','students.id','students.phone','students.dob','students.gender','students.email','students.address','students.parents_phone','students.amount','nations.name')
+        ->where('students.status','=','active')->findOrFail($id);
+        $courses = CourseStudent::join('courses','courses.id','=','course_student.course_id')->join('teachers','teachers.id','=','courses.teacher_id') 
+        ->select('courses.id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
+        ->where('course_student.student_id','=',$id)->get();
+        //dd($courses);
+        return view('manager.students.detail',['student'=>$student,'courses'=>$courses]);
     }
     public function getStudentEditlAdmin($id){
         $student = Student::join('nations','nations.id','=','students.nation_id')->where('students.status','=','active')->findOrFail($id);
@@ -117,6 +160,38 @@ class StudentController extends Controller
         ->with(['flash_level'=>'alert-success','flash_message' => 'Sửa học viên thành công'] );
 
     }
+    public function getStudentEditManager($id){
+        $student = Student::join('nations','nations.id','=','students.nation_id')->where('students.status','=','active')->findOrFail($id);
+        $nations = Nation::select('id','name')->orderBy('name','ASC')->get();
+        return view('manager.students.edit',['student'=>$student, 'nations'=>$nations]);
+
+    }
+    public function postStudentEditManager($id,StudentEditRequest $request){
+        $student = Student::findOrFail($id);
+        $student->firstname = $request->txtfirstname;
+        $student->lastname = $request->txtlastname;
+        $student->name = $request->txtlastname.' '.$request->txtfirstname;
+      
+        $student->gender = $request->selectgender;
+
+        $student->nation_id = $request->selectnation;
+        $student->email = $request->txtemail;
+        $student->phone = $request->txtphone;
+        $student->parents_phone = $request->txtparentphone;
+        $student->dob = $request->txtdob;
+        $student->address = $request->txtaddress;
+
+        if($request->txtpassword != null){
+            $student->password = Hash::make($request->txtpassword);
+        }
+       
+        $student->save();
+        $url = "managersites/student/detail/".$student->id;
+       // $url = "adminsites/student/detail/7";
+        return redirect($url)
+        ->with(['flash_level'=>'alert-success','flash_message' => 'Sửa học viên thành công'] );
+
+    }
     public function getStudentDelete($id){
         $student = Student::findOrFail($id);
         $student->status = "delete";
@@ -128,7 +203,7 @@ class StudentController extends Controller
     }
     public function getListCoursesOfStudentJson($studentid){
          $courses = CourseStudent::join('courses','courses.id','=','course_student.course_id')->join('teachers','teachers.id','=','courses.teacher_id') 
-        ->select('courses.id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
+        ->select('course_student.id','courses.id as course_id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
         ->where('course_student.student_id','=',$studentid)->get();
         return $courses;
     }

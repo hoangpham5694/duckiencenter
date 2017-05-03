@@ -56,4 +56,17 @@ app.controller('DetailStudent', function($scope, $http, API,$timeout){
   			}) ;
 		}
 	}
+	$scope.deleteCourseStudent = function(courseStudentId){
+		var confirmAcceptCourse = confirm("Bạn chắc chắn muốn rời lớp học này?");
+		if(confirmAcceptCourse){
+			var url = API + 'adminsites/course/deletestudentcourse/'+courseStudentId;
+			$http.get(url).then(function successCallback (response){
+				alert(response.data);
+				$scope.getListCoursesOfStudent($scope.studentId);
+			//$scope.allCourses = response.data;
+			}  , function errorCallback(response) {
+			console.log(response);
+  			}) ;
+		}
+	}
 });

@@ -15,6 +15,9 @@ class TeacherController extends Controller
     public function getTeacherList(){
     	return view('admin.teachers.list');
     }
+    public function getTeacherListManager(){
+        return view('manager.teachers.list');
+    }
     public function getTeacherListJson($max, $page,Request $request){
         $key = $request->key;
         $orderby = $request->orderby;
@@ -135,5 +138,20 @@ class TeacherController extends Controller
       //  dd($teacher);
         //  return $teacher;
         return view('admin.teachers.detail',['teacher'=>$teacher,'courses' => $courses]);
+    }
+    public function getTeacherDetailManager($id)
+    {
+        $teacher = Teacher::join('salary_level','teachers.salary_level_id','=','salary_level.id')->findOrFail($id)->toArray();
+        $courses = Course::select('id','name')->where('teacher_id','=',$id)->get();
+      //  dd($teacher);
+        //  return $teacher;
+        return view('manager.teachers.detail',['teacher'=>$teacher,'courses' => $courses]);
+    }
+    public function getTeacherListSimpleJson()
+    {
+        $teachers = Teacher::select('id','firstname','lastname')
+        ->where('status','=','active')
+        ->orderBy('firstname','ASC')->get();
+        return json_encode($teachers);
     }
 }

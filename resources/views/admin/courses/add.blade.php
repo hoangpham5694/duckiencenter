@@ -2,7 +2,7 @@
 @section('header')
     <title>Admin::Thêm lớp học</title>
 @endsection
-@section('title','Danh sách lớp học')
+@section('title','Thêm lớp học')
 @section('content')
 <div class="col-md-7"  >
     <form  action="" method="post" class="form-horizontal">
@@ -66,7 +66,7 @@
     </div>
   </div>
       <div class="form-group">
-    <label class="control-label col-sm-3" for="description">Mô tả:</label>
+    <label class="control-label col-sm-3" for="description">Lịch học:</label>
     <div class="col-sm-9">
 
  <textarea class="form-control" rows="5" name="txtDescription" id="description" placeholder="Mô tả khóa học"></textarea>

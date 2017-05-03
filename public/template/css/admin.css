@@ -61,3 +61,6 @@ body{
 .teacher-sumary h3{
     margin-left: 10px;
 }
+.teacher-sumary .courses  {
+    padding-left: 15px;
+}

@@ -17,20 +17,29 @@ class CourseController extends Controller
     public function getCourseListAdmin(){
     	return view('admin.courses.list');
     }
+    public function getCourseListManager(){
+        return view('manager.courses.list');
+    }
+    
     public function getCourseListJson(Request $request){
         $keyword = $request->keyword;
     	$numberRecord= $request->max;
         $agencyId =$request->agencyid;
         $teacherId = $request->teacherid;
     	$page = $request->page;
-
+        if($agencyId == ""){
+            $agencyId = null;
+        }
+        if($teacherId == ""){
+            $teacherId = null;
+        }
         $vitri =($page -1 ) * $numberRecord;
      //   $totalTeacher = Teacher::count();
     //    $numPages = $totalApp / $numberRecord +1;
 
            $data = Course::join('agencies','agencies.id','=','courses.agency_id')
            ->join('teachers','teachers.id','=','courses.teacher_id')
-           ->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.name as teacher_name','courses.status')
+           ->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname','courses.status')
             ->where('courses.status','=','active')
             ->where(function($query) use ($keyword){
             $query->where('courses.name','LIKE','%'.$keyword.'%');
@@ -92,6 +101,11 @@ class CourseController extends Controller
         $course = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname','courses.status')->where('courses.status','=','active')->find($id);
 
         return view('admin.courses.detail',['course'=>$course]);
+    }
+     public function getCourseDetailManager($id){
+        $course = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.fee','agencies.name as agency_name','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname','courses.status')->where('courses.status','=','active')->find($id);
+
+        return view('manager.courses.detail',['course'=>$course]);
     }
     public function getCourseStudentsListJsonAdmin($id){
         $students = CourseStudent::join('students','students.id','=','course_student.student_id')

@@ -19,6 +19,9 @@ class CheckAttendanceController extends Controller
     public function indexAdmin(){
     	return view('admin.checkattendance.index');
     }
+    public function indexManager(){
+        return view('manager.checkattendance.index');
+    }
     public function getListAttendancesOfDateJson(Request $request){
     	$date = $request->date;
     	//$date = "2017-03-19";
@@ -50,6 +53,14 @@ class CheckAttendanceController extends Controller
         ->where('attendances.id','=',$id)->first();
       //  dd($attendance);
         return view('admin.checkattendance.detail',['attendance' => $attendance]);
+    }
+    public function getDetailAttendanceManager($id){
+        $attendance = Attendance::join('courses','courses.id','=','attendances.course_id')
+        ->join('teachers','teachers.id','=','courses.teacher_id')
+        ->select('attendances.id','attendances.name','attendances.study_date','courses.fee','courses.name as course_name', 'attendances.total_students','attendances.is_taught','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')
+        ->where('attendances.id','=',$id)->first();
+      //  dd($attendance);
+        return view('manager.checkattendance.detail',['attendance' => $attendance]);
     }
     public function getDetailAttdanceJson($id){
         $attendance = Attendance::join('courses','courses.id','=','attendances.course_id')

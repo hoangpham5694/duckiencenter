@@ -5,7 +5,40 @@
 @section('title','Danh sách lớp học')
 @section('content')
 <div ng-controller="CourseController">
-    <a href="{!! url('adminsites/course/add') !!}" class="btn btn-outline btn-primary">Thêm lớp</a>
+        <div class="row" data-ng-init="getListTeachers(); getListAgencies()">
+        <div class="col-sm-4">
+            <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Giáo viên:</label>
+    <div class="col-sm-8">
+      <select name="" ng-model="sltTeacher" class="form-control" ng-change="changeTeacher()" id="">
+          <option value="">Tất cả</option>
+       <option ng-repeat="teacher in teachers" value="{%teacher.id%}">{%teacher.lastname%} {%teacher.firstname%}</option>
+      </select>
+    </div>
+       
+  </div>
+        </div>
+                <div class="col-sm-4">
+            <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Nhóm:</label>
+    <div class="col-sm-8">
+      <select name="" ng-model="sltAgency" class="form-control" ng-change="changeAgency()" id="">
+          <option value="">Tất cả</option>
+       <option value="{%agency.id%}" ng-repeat="agency in agencies">{%agency.name%}</option>
+      </select>
+    </div>
+       
+  </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group custom-search-form">
+                                <input type="text" ng-model="txtKeyword" ng-change="changeKey()" class="form-control" placeholder="Nhập Tên, SĐT, Email... ">
+                                 <span class="input-group-addon" id="sizing-addon2"> <i class="fa fa-search"></i></span>
+                                
+                            </div>
+        </div>
+    </div>
+   
 <table class="table table-hover">
                               <thead>
                                     <tr>
@@ -15,7 +48,7 @@
                                         <th>Học phí</th>
                                         <th>Chi nhánh</th>
                                         <th>Giáo viên</th>
-                                        <th></th>
+                                        <th> <a href="{!! url('adminsites/course/add') !!}" class="btn btn-outline btn-xs btn-primary">Thêm lớp</a></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -25,12 +58,15 @@
                                 		<td>{% course.max_students %}</td>
                                 		<td>{% course.fee %}</td>
                                 		<td>{% course.agency_name %}</td>
-                                        <td>{% course.teacher_name %}</td>
+                                        <td>{% course.teacher_lastname %} {% course.teacher_firstname %}</td>
                                 		<td>
+                                            <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/course/detail') !!}/{% course.id %}">
+                                                <i class="fa fa-address-card" aria-hidden="true"></i>Chi tiết </a>
+
                                             <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/course/edit') !!}/{% course.id %}">
-                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sửa
                                             </a>
-    <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(course.id)">  <i class="fa fa-trash" aria-hidden="true"></i></button>
+    <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(course.id)">  <i class="fa fa-trash" aria-hidden="true"></i> Xóa</button>
                                           </td>
                                 	</tr>
                                 </tbody>

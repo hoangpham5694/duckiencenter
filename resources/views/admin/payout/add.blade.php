@@ -2,7 +2,7 @@
 @section('header')
     <title>Admin::Thanh toán</title>
 @endsection
-@section('title','Thanh toan cho giáo viên')
+@section('title','Thanh toán cho giáo viên')
 @section('content')
 <div class="col-md-7"  >
   <form  action=""  method="POST" enctype="multipart/form-data" class="form-horizontal">
