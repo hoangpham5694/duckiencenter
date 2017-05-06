@@ -5,7 +5,7 @@ app.controller('StudentController', function($scope, $http, API,$timeout){
 	$scope.orderby = "lastname";
 	$scope.keyword = "";
 	 var getTotalStudents = function(){
-	 	$http.get(API + 'adminsites/student/totaljson').then(function successCallback (response){
+	 	$http.get(API + 'managersites/student/totaljson').then(function successCallback (response){
 	
 		$scope.total = response.data /maxRecord +1 ;
 		console.log(response.data);
@@ -18,7 +18,7 @@ app.controller('StudentController', function($scope, $http, API,$timeout){
   		}) ;
 	 }
 	var getListStudents = function (page){
-		$http.get(API + 'adminsites/student/listjson/'+$scope.maxRecord+'/'+page+"?orderby="+$scope.orderby+"&sort="+$scope.sort+"&key="+$scope.keyword).then(function successCallback (response){
+		$http.get(API + 'managersites/student/listjson/'+$scope.maxRecord+'/'+page+"?orderby="+$scope.orderby+"&sort="+$scope.sort+"&key="+$scope.keyword).then(function successCallback (response){
 		getTotalStudents();
 		$scope.students = response.data;
 		$scope.page = page;

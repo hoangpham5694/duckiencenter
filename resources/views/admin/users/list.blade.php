@@ -56,8 +56,13 @@
                                     <td>{% user.role %}</td>
                           
                                     <td>
-                          
-
+                                   <a class="btn btn-xs btn-primary" href="{!! url('adminsites/user/edit') !!}/{%user.id%}" >
+                                         <i class="glyphicon glyphicon-edit" aria-hidden="true"></i> Sửa
+                                            </a>
+        <a class="btn btn-xs btn-danger" ng-click="confirmDelete(user.id)" >
+                                         <i class="glyphicon glyphicon-edit" aria-hidden="true"></i> Xóa
+                                            </a>
+  
                                      </td>
                                   </tr>
                                 </tbody>

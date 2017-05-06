@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Course;
 use App\Teacher;
@@ -20,7 +20,50 @@ class CourseController extends Controller
     public function getCourseListManager(){
         return view('manager.courses.list');
     }
-    
+    public function getListAllCourseStudent($method)
+    {
+         return view('student.courses.list',['method'=>$method]);
+    }
+    public function getCourseListIndividualJson(Request $request)
+    {
+        $user =  Auth::guard('students')->user();
+         $keyword = $request->keyword;
+        $numberRecord= $request->max;
+        $agencyId =$request->agencyid;
+        $teacherId = $request->teacherid;
+        $page = $request->page;
+        if($agencyId == ""){
+            $agencyId = null;
+        }
+        if($teacherId == ""){
+            $teacherId = null;
+        }
+        $vitri =($page -1 ) * $numberRecord;
+     //   $totalTeacher = Teacher::count();
+    //    $numPages = $totalApp / $numberRecord +1;
+       // dd($user);
+           $data = Course::
+     //      join('teachers','teachers.id','=','courses.teacher_id')
+           join('course_student','course_student.student_id','=','courses.id')
+           ->select('courses.id','courses.name','courses.max_students','courses.fee','courses.status')
+        //    ->where('courses.status','=','active')
+        //    ->where('course_student.student_id','=',$user->id)
+        //    ->where(function($query) use ($keyword){
+        //    $query->where('courses.name','LIKE','%'.$keyword.'%');
+        //    })
+        //   ->where('courses.agency_id','LIKE', $agencyId)
+        //    ->where('courses.teacher_id','LIKE', $teacherId)
+        //    ->orderBy('courses.id','DESC')->limit($numberRecord)->offset($vitri)
+            ->get();
+        
+        return $data;
+
+
+    }
+    public function getCourseTotalIndividualJson()
+    {
+        # code...
+    }
     public function getCourseListJson(Request $request){
         $keyword = $request->keyword;
     	$numberRecord= $request->max;

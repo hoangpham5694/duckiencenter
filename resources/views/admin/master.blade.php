@@ -58,12 +58,12 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="{!! url('adminsites/account/profile') !!}"><i class="fa fa-user fa-fw"></i> Thông tin cá nhân</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="{!! url('adminsites/account/edit') !!}"><i class="fa fa-gear fa-fw"></i> Cập nhật thông tin</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="{!! url('logout') !!}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -75,104 +75,121 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                            <!-- /input-group -->
+
+                        <li>
+                            <a href="{!! url('adminsites') !!}"><i class="fa fa-dashboard fa-fw"></i> Trang chủ</a>
+                        </li>
+                         <li>
+                            <a href="{!! url('adminsites/check-attendance/index') !!}"><i class="fa fa-check-square-o" ></i> Kiểm tra buổi học</a>
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Thống kê<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Flot Charts</a>
+                                    <a href="#">Flot Charts</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Morris.js Charts</a>
+                                    <a href="#">Morris.js Charts</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+
+
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+                            <a href="#">
+                                <i class="fa fa-female" aria-hidden="true"></i>
+                                Quản lý giáo viên<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="panels-wells.html">Panels and Wells</a>
+                                    <a href="{!! url('adminsites/teacher/add') !!}">Thêm giáo viên</a>
                                 </li>
                                 <li>
-                                    <a href="buttons.html">Buttons</a>
+                                    <a href="{!! url('adminsites/teacher/list') !!}">Danh sách giáo viên</a>
+                                </li>
+                      
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+
+
+
+                         <li>
+                            <a href="#"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Quản lý học viên<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{!! url('adminsites/student/add') !!}">Thêm học viên</a>
                                 </li>
                                 <li>
-                                    <a href="notifications.html">Notifications</a>
+                                    <a href="{!! url('adminsites/student/list') !!}">Danh sách học viên</a>
                                 </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="icons.html"> Icons</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid</a>
-                                </li>
+                      
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i> Quản lý lớp học<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Second Level Item</a>
+                                    <a href="{!! url('adminsites/course/add') !!}">Thêm lớp học</a>
                                 </li>
                                 <li>
-                                    <a href="#">Second Level Item</a>
+                                    <a href="{!! url('adminsites/course/list') !!}">Danh sách lớp học</a>
                                 </li>
-                                <li>
-                                    <a href="#">Third Level <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
+                      
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#">
+                              <i class="fa fa-money" aria-hidden="true"></i>
+                                Học phí<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="blank.html">Blank Page</a>
+                                    <a href="{!! url('adminsites/payin/index') !!}">Thu học phí</a>
                                 </li>
                                 <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="{!! url('adminsites/payin/history') !!}">Lịch sử</a>
                                 </li>
+                      
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>           
+                             <li>
+                            <a href="#">
+                              <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                Lương giáo viên<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{!! url('adminsites/payout/index') !!}">Thanh toán lương</a>
+                                </li>
+                                <li>
+                                    <a href="{!! url('adminsites/payout/history') !!}">Lịch sử</a>
+                                </li>
+                      
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+
+
+                        <li>
+                            <a href="#">
+                             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                Quản lí nhân viên<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{!! url('adminsites/user/add') !!}">Thêm nhân viên</a>
+                                </li>
+                                <li>
+                                    <a href="{!! url('adminsites/user/list') !!}">Danh sách</a>
+                                </li>
+                      
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                 
+             
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

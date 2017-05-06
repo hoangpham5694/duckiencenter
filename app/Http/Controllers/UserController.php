@@ -93,4 +93,11 @@ class UserController extends Controller
     	return redirect('adminsites/user/list')->with(['flash_level'=>'alert-success','flash_message' => 'Sửa nhân viên thành công'] );
 
     }
+    public function getDeleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = "delete";
+        $user->save();
+        return "Xóa thành công";
+    }
 }

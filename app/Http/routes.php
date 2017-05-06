@@ -11,10 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', ['uses'=>'GuestController@getIndex']);
+Route::get('bai-viet/{id}/{slug}', ['uses'=>'GuestController@getViewPost']);
+Route::get('danh-muc/{id}/{slug}', ['uses'=>'GuestController@getListPost']);
+Route::get('listpostjson',[ 'uses' => 'NewsController@getListNewsJson']);
 
+
+Route::get('logout',['as' => 'getLogin', 'uses' => 'LoginController@getLogout']);
 Route::get('login',['as' => 'getLogin', 'uses' => 'LoginController@getLogin']);
 Route::post('login',['as' => 'postLogin', 'uses' => 'LoginController@postLogin']);
 Route::group(['middleware'=>'isteacher'], function(){
@@ -41,6 +44,22 @@ Route::group(['middleware'=>'isstudent'], function(){
 		Route::get('/', function(){
     		return view('student.dashboard.main');
     	});
+    	Route::group(['prefix' => 'course'], function(){
+    		Route::get('list/{method}',['uses'=>'CourseController@getListAllCourseStudent']);
+			Route::get('listalljson',[ 'uses' => 'CourseController@getCourseListJson']);
+			Route::get('totaljson',[ 'uses' => 'CourseController@getCourseTotalJson']);
+			Route::get('listindividualjson',[ 'uses' => 'CourseController@getCourseListIndividualJson']);
+			Route::get('totalindividualjson',[ 'uses' => 'CourseController@getCourseTotalIndividualJson']);
+	
+    	});
+    	Route::group(['prefix' => 'teacher'], function(){
+			Route::get('listsimplejson',['uses' => 'TeacherController@getTeacherListSimpleJson']);
+	
+		});
+		Route::group(['prefix' => 'agency'], function(){
+    		Route::get('listsimplejson',['uses' => 'AgencyController@getAgencyListSimpleJson']);
+    	
+    	});
 
 	});
 });
@@ -52,7 +71,12 @@ Route::group(['middleware'=>'isroleadmin'], function(){
     	});
     	Route::group(['prefix' => 'agency'], function(){
     		Route::get('listsimplejson',['uses' => 'AgencyController@getAgencyListSimpleJson']);
-
+    		Route::get('list',['uses'=>'AgencyController@getAgencyList']);
+    		Route::get('listjson/{max}/{page}',['uses'=>'AgencyController@getAgencyListJson']);
+    		Route::get('totaljson',['uses'=>'AgencyController@getAgencyTotalJson']);
+    		Route::get('add/{agencyname}',['uses'=>'AgencyController@getAgencyAdd']);
+    		Route::get('edit/{agencyid}/{agencyname}',['uses'=>'AgencyController@getAgencyEdit']);
+    		Route::get('delete/{id}',['uses'=> 'AgencyController@getAgencyDelete']);
     	});
 		Route::group(['prefix' => 'teacher'], function(){
 			Route::get('list',['as' => 'getTeacherListAdmin', 'uses' => 'TeacherController@getTeacherList']);
@@ -156,6 +180,7 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::post('add',[ 'uses' => 'UserController@postAddUserAdmin']);
 			Route::get('edit/{id}',['uses' => 'UserController@getEditUserAdmin']);
 			Route::post('edit/{id}',['uses' => 'UserController@postEditUserAdmin']);
+			Route::get('delete/{id}',['uses' => 'UserController@getDeleteUser']);
 		});
 		Route::group(['prefix' => 'account'], function(){
 			Route::get('profile',['uses'=>'AccountController@getProfileAdmin']);
@@ -163,7 +188,20 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::post('edit',['uses'=>'AccountController@postEditUser']);
 
 		});
+		Route::group(['prefix' => 'news'], function(){
+			Route::get('list',['uses'=>'NewsController@getListNewsAdmin']);
+			Route::get('detail/{id}',['uses'=>'NewsController@getDetailNewsAdmin']);
+			Route::get('add',['uses'=>'NewsController@getAddNewsAdmin']);
+			Route::post('add',['uses'=>'NewsController@postAddNewsAdmin']);
+			Route::get('listjson',['uses'=>'NewsController@getListNewsJson']);
+			Route::get('totaljson',['uses'=>'NewsController@getTotalNewsJson']);
+			Route::get('edit/{id}',['uses'=>'NewsController@getEditNewsAdmin']);
+			Route::post('edit/{id}',['uses'=>'NewsController@postEditNewsAdmin']);
+		});
+		Route::group(['prefix' => 'cate'], function(){
+			Route::get('listsimplejson',['uses'=>'CateController@getListCatesSimpleJson']);
 
+		});
 	});
 });
 Route::group(['middleware'=>'isrolemanager'], function(){

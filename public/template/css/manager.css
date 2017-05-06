@@ -75,3 +75,6 @@ body{
 .teacher-sumary .courses  {
     padding-left: 15px;
 }
+.sidebar ul li a.active {
+    background-color: #636262;
+}

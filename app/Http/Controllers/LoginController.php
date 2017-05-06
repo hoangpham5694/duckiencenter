@@ -21,6 +21,13 @@ class LoginController extends Controller
         */
     	return view('login.login');
     }
+    public function getLogout(){
+        Auth::guard('students')->logout();
+        Auth::guard('teachers')->logout();
+        Auth::guard('users')->logout();
+
+        return redirect()->route('getLogin');
+    }
     public function postLogin(LoginRequest $request){
     	 $login = ['username' => $request->txtUsername,
     	 'password' => $request->txtPassword,
@@ -29,17 +36,25 @@ class LoginController extends Controller
     	switch ($request->selectRole) {
     		case 'teacher':
     			if (Auth::guard('teachers')->attempt($login)){
-    				echo "you are teacher";
+    			//	echo "you are teacher";
+                    return redirect('teachersites');
     			}else{
-    				echo "you are not teacher";
+    				//echo "you are not teacher";
+                    return redirect('login')
+                    ->with(['flash_level'=>'alert-danger','flash_message' => 'Sai tên đăng nhập hoặc mật khẩu'] );
+
     			}
     			
     			break;
     		case 'student':
                 if (Auth::guard('students')->attempt($login)){
-                    echo "you are student";
+                  //  echo "you are student";
+                    return redirect('studentsites');
                 }else{
-                    echo "you are not student";
+                   // echo "you are not student";
+                    return redirect('login')
+                    ->with(['flash_level'=>'alert-danger','flash_message' => 'Sai tên đăng nhập hoặc mật khẩu'] );
+
                 }
                 break;
             case 'admin':
@@ -49,17 +64,25 @@ class LoginController extends Controller
                 'status' =>'active'
                 ];
                 if (Auth::guard('users')->attempt($login)){
-                    echo "you are admin";
+                   // echo "you are admin";
+                    return redirect('adminsites');
                 }else{
-                    echo "you are not admin";
+                  //  echo "you are not admin";
+                     return redirect('login')
+                    ->with(['flash_level'=>'alert-danger','flash_message' => 'Sai tên đăng nhập hoặc mật khẩu'] );
+
                 }
                 break;
             case 'manager':
 
                 if (Auth::guard('users')->attempt($login)){
-                    echo "you are manager";
+                  //  echo "you are manager";
+                      return redirect('managersites');
                 }else{
-                    echo "you are not manager";
+                   // echo "you are not manager";
+                      return redirect('login')
+                    ->with(['flash_level'=>'alert-danger','flash_message' => 'Sai tên đăng nhập hoặc mật khẩu'] );
+
                 }
                 break;               
     		default:

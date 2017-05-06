@@ -49,12 +49,13 @@ app.controller('UserController', function($scope, $http, API,$timeout){
 	 	getListUsers(page);
 	 }
 	$scope.confirmDelete = function(id){
-		var isConfirmDelete = confirm('Bạn có chắc muốn xóa học viên này không');
+		var isConfirmDelete = confirm('Bạn có chắc muốn xóa nhân viên này không');
 		if(isConfirmDelete){
 			$http.get(API + 'adminsites/user/delete/'+id).then(function successCallback (response){
-			console.log(response);
-			console.log($scope.page);
-			getListStudents($scope.page);
+			alert(response.data);
+			//console.log(response);
+			//console.log($scope.page);
+			getListUsers($scope.page);
 		//	alert(response.data);
 			}  , function errorCallback(response) {
 			console.log(response);

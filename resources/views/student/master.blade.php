@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  ng-app="my-app">
 
 <head>
 
@@ -400,6 +400,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo asset('public/template/dist/js/sb-admin-2.js') ; ?>"></script>
+        <script src="<?php echo asset('public/app/lib/angular.min.js') ; ?>"></script>
+    <script src="<?php echo asset('public/app/app.js') ; ?>"></script>   
 
 @yield('footer')
 </body>

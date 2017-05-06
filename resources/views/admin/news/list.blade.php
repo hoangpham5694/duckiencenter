@@ -1,0 +1,74 @@
+@extends('admin.master')
+@section('header')
+    <title>Admin::Danh sách tin</title>
+@endsection
+@section('title','Danh sách tin')
+@section('content')
+<div ng-controller="NewsController">
+        <div class="row" data-ng-init="getListCates()">
+        <div class="col-sm-4">
+            <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Danh mục:</label>
+    <div class="col-sm-8">
+      <select name="" ng-model="sltCate" class="form-control" ng-change="changeCate()" id="">
+          <option value="">Tất cả</option>
+       <option ng-repeat="cate in cates" value="{%cate.id%}">{%cate.name%} </option>
+      </select>
+    </div>
+       
+  </div>
+        </div>
+        <div class="col-sm-4">
+        
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group custom-search-form">
+                                <input type="text" ng-model="txtKeyword" ng-change="changeKey()" class="form-control" placeholder="Nhập tiêu đề ">
+                                 <span class="input-group-addon" id="sizing-addon2"> <i class="fa fa-search"></i></span>
+                                
+                            </div>
+        </div>
+    </div>
+   
+<table class="table table-hover">
+                              <thead>
+                                    <tr>
+                                        <th>Mã lớp</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Tên</th>
+                                        <th>Ngày đăng</th>
+                                       
+                                        <th> <a href="{!! url('adminsites/course/add') !!}" class="btn btn-outline btn-xs btn-primary">Thêm lớp</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	<tr ng-repeat="news in newss">
+                                		<td>{% news.id %}</td>
+                                		<td><img ng-src="{!! asset('public/upload/newsimages') !!}/{% news.image %}" width="60px" height="60px" alt=""></td>
+                                		<td>{% news.title %}</td>
+                                		<td>{% news.created_at %}</td>
+        
+                                		<td>
+                                            <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/news/detail') !!}/{% news.id %}">
+                                                <i class="fa fa-address-card" aria-hidden="true"></i>Chi tiết </a>
+
+                                            <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/news/edit') !!}/{% course.id %}">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sửa
+                                            </a>
+    <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(news.id)">  <i class="fa fa-trash" aria-hidden="true"></i> Xóa</button>
+                                          </td>
+                                	</tr>
+                                </tbody>
+</table>
+
+<div class="btn-toolbar" role="toolbar" aria-label="...">
+  <div class="btn-group" role="group" aria-label="...">
+  	<button type="button" ng-repeat="n in [1,total] | makeRange" ng-click="getlistcourses(n)" class="btn btn-default" ng-disabled="page == n">{% n %}</button>
+  </div>
+
+</div>
+
+@endsection
+@section('footer')
+  <script src="<?php echo asset('public/app/controller/admins/NewsController.js') ; ?>"></script>  
+@endsection

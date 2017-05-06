@@ -5,7 +5,7 @@ app.controller('TeacherController', function($scope, $http, API,$timeout){
 	$scope.orderby = "lastname";
 	$scope.keyword = "";
 	 var getTotalTeachers = function(){
-	 	$http.get(API + 'adminsites/teacher/totaljson').then(function successCallback (response){
+	 	$http.get(API + 'managersites/teacher/totaljson').then(function successCallback (response){
 	
 		$scope.total = response.data /maxRecord +1 ;
 		console.log(response.data);
@@ -18,7 +18,7 @@ app.controller('TeacherController', function($scope, $http, API,$timeout){
   		}) ;
 	 }
 	var getListTeachers = function (max, page){
-		var url =API + 'adminsites/teacher/listjson/'+max+'/'+page+"?orderby="+$scope.orderby+"&sort="+$scope.sort+"&key="+$scope.keyword;
+		var url =API + 'managersites/teacher/listjson/'+max+'/'+page+"?orderby="+$scope.orderby+"&sort="+$scope.sort+"&key="+$scope.keyword;
 		$http.get(url).then(function successCallback (response){
 		getTotalTeachers();
 		$scope.teachers = response.data;
