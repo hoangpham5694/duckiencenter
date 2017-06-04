@@ -1,6 +1,6 @@
 @extends('guest.master')
 @section('header')
-    <title>Trung tâm luyện thi Đức Kiến</title>
+    <title>Lớp học vật lý</title>
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet">
 @endsection
 
@@ -8,7 +8,7 @@
 <div class="new-post">
 	<div class="col-sm-6 ">
 		<div class="new-post-left">
-			<img src="{{ asset('public/upload/newsimages') }}/{!! $lastNews->image !!}" alt="">
+			<img src="{{ asset('upload/newsimages') }}/{!! $lastNews->image !!}" alt="">
 			<a href="" class="title">
 				<h3>
 					{!! $lastNews->title !!}
@@ -53,12 +53,12 @@
       @foreach($listPostNewCourses as $postItem)
       <div class="item">
       	<div class="col-sm-2">
-      		<a href="">
-      			<img src="{!! asset('public/upload/newsimages') !!}/{!! $postItem->image!!}" alt="">
+      		<a href="{{ url('bai-viet') }}/{!! $postItem->id !!}/{!! $postItem->slug !!}.html">
+      			<img src="{!! asset('upload/newsimages') !!}/{!! $postItem->image!!}" alt="">
       		</a>
       	</div>
       	<div class="col-sm-10">
-      		<a href=""><h4> {!! $postItem->title!!} </h4></a>
+      		<a href="{{ url('bai-viet') }}/{!! $postItem->id !!}/{!! $postItem->slug !!}.html"><h4> {!! $postItem->title!!} </h4></a>
       		
       		<p> 
 				{{ str_limit($postItem->description, $limit = $maxDigit, $end = '...') }}
@@ -73,12 +73,12 @@
       @foreach($listPostActivities as $postItem)
       <div class="item">
       	<div class="col-sm-2">
-      		<a href="">
-      			<img src="{!! asset('public/upload/newsimages') !!}/{!! $postItem->image!!}" alt="">
+      		<a href="{{ url('bai-viet') }}/{!! $postItem->id !!}/{!! $postItem->slug !!}.html">
+      			<img src="{!! asset('upload/newsimages') !!}/{!! $postItem->image!!}" alt="">
       		</a>
       	</div>
       	<div class="col-sm-10">
-      		<a href=""><h4> {!! $postItem->title!!} </h4></a>
+      		<a href="{{ url('bai-viet') }}/{!! $postItem->id !!}/{!! $postItem->slug !!}.html"><h4> {!! $postItem->title!!} </h4></a>
       		
       		<p> 
 				{{ str_limit($postItem->description, $limit = $maxDigit, $end = '...') }}
@@ -93,12 +93,12 @@
       @foreach($listPostNews as $postItem)
       <div class="item">
       	<div class="col-sm-2">
-      		<a href="">
-      			<img src="{!! asset('public/upload/newsimages') !!}/{!! $postItem->image!!}" alt="">
+      		<a href="{{ url('bai-viet') }}/{!! $postItem->id !!}/{!! $postItem->slug !!}.html">
+      			<img src="{!! asset('upload/newsimages') !!}/{!! $postItem->image!!}" alt="">
       		</a>
       	</div>
       	<div class="col-sm-10">
-      		<a href=""><h4> {!! $postItem->title!!} </h4></a>
+      		<a href="{{ url('bai-viet') }}/{!! $postItem->id !!}/{!! $postItem->slug !!}.html"><h4> {!! $postItem->title!!} </h4></a>
       		
       		<p> 
 				{{ str_limit($postItem->description, $limit = $maxDigit, $end = '...') }}

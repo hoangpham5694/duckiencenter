@@ -1,0 +1,33 @@
+.info-course ul{
+    padding-left: 0;
+}
+.teacher-info .image{
+    text-align: center;
+    border-right: 1px solid #eee;
+}
+.teacher-info .image img{
+   width:70%;
+    max-width: 200px;
+}
+.teacher-info .info table tr td{
+    padding-right: 30px;
+    line-height: 30px;
+}
+.teacher-info .info table{
+    margin-left: 5px;
+}
+.teacher-sumary .row{
+    margin: 10px 0;
+}
+.teacher-sumary h3{
+    margin-left: 10px;
+}
+.teacher-sumary .courses  {
+    padding-left: 15px;
+}
+.sidebar ul li a.active{
+    background-color: #eaeaea;
+}
+.info tr td{
+    padding: 5px 0;
+}

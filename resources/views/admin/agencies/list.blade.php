@@ -75,5 +75,5 @@
 </div>
 @endsection
 @section('footer')
-  <script src="<?php echo asset('public/app/controller/admins/AgencyController.js') ; ?>"></script>  
+  <script src="<?php echo asset('app/controller/admins/AgencyController.js') ; ?>"></script>  
 @endsection

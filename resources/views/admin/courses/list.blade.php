@@ -81,5 +81,5 @@
 
 @endsection
 @section('footer')
-  <script src="<?php echo asset('public/app/controller/admins/CourseController.js') ; ?>"></script>  
+  <script src="<?php echo asset('app/controller/admins/CourseController.js') ; ?>"></script>  
 @endsection

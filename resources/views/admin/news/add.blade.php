@@ -1,7 +1,7 @@
 @extends('admin.master')
 @section('header')
     <title>Admin::Thêm bài viết</title>
-    <script src="{!! asset('public/ckeditor/ckeditor.js') !!}"></script>
+    <script src="{!! asset('ckeditor/ckeditor.js') !!}"></script>
 @endsection
 @section('title','Thêm bài viết')
 @section('content')

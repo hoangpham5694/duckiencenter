@@ -127,7 +127,7 @@
             <div class="form-group">
     <label class="control-label col-sm-3" for="fileimage">Hình đại diện:</label>
     <div class="col-sm-9">
-      <img src="{!! asset('public/upload/teacherimages') !!}/{{ $teacher['image'] }}" width="100px" height="150px" alt="">
+      <img src="{!! asset('upload/teacherimages') !!}/{{ $teacher['image'] }}" width="100px" height="150px" alt="">
   <input type="file"   name="fileimage" id="fileimage">
      
     </div>
@@ -165,7 +165,7 @@
 
 @endsection
 @section('footer')
- <script src="<?php echo asset('public/app/controller/admins/TeacherController.js') ; ?>"></script> 
+ <script src="<?php echo asset('app/controller/admins/TeacherController.js') ; ?>"></script> 
     <script src="{!! asset('public/ckeditor/ckeditor.js') !!}"></script>
           <script>
                 // Replace the <textarea id="editor1"> with a CKEditor

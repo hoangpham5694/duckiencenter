@@ -35,3 +35,16 @@ body{
 
     border-bottom: 1px solid #cccccc;
 }
+.list-thread .item .date-post{
+    padding-left: 15px;
+}
+.list-thread .item {
+    padding-bottom: 10px;
+    border-bottom: solid 1px #cccccc;
+}
+.list-thread .item .teacher{
+    color:#0956b9;
+}
+.row>.teacher-info .info table tr td{
+    padding: 0 10px;
+}

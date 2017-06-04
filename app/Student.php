@@ -22,6 +22,7 @@ class Student extends Authenticatable
         'nation_id',
         'gender',
         'amount',
+        'amount_trial',
 
     ];
     public function payin(){

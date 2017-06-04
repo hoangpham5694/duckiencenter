@@ -122,4 +122,66 @@ class PayinController extends Controller
         ->where('payin.id','=',$id)->first();
         return view('manager.payin.bill',['payin'=>$payin]);
     }
+    public function getAddTrialAdmin($studentid)
+    {
+        $student = Student::findOrFail($studentid);
+      
+        return view('admin.payin.addtrial',['student'=>$student]);
+    }
+    public function postAddTrialAdmin(Request $request, $studentid)
+    {
+        try {
+            DB::beginTransaction();
+            $student = Student::findOrFail($studentid);
+   
+           
+            $student->amount_trial = $student->amount_trial + $request->txtTrialMoney;
+
+            $student->save();
+            DB::commit();
+           // $url = "adminsites/payin/detail/"+$payin->id;
+            return redirect()->action('StudentController@getStudentDetailAdmin',['id'=>$student->id]);
+        } catch (Exception $e) {
+           // printf $e;
+            DB::rollback();
+            return "Lỗi trong quá tình xử lý";
+        }
+        
+
+
+    }
+    public function getHistoryPayinAdmin()
+    {
+        return view('admin.payin.history');
+    }
+    public function getListPayinJson($max, $page, Request $request)
+    {
+        $numberRecord= $max;
+        $vitri =($page -1 ) * $numberRecord;
+        $key = $request->key;
+        $dateBegin = $request->datebegin;
+        $dateEnd = $request->dateend;
+     /*   if($dateBegin == ""){
+            $dateBegin = null;
+        }
+        if($dateEnd == ""){
+            $dateEnd = null;
+        }
+        */
+        $payins = Payin::join('students','students.id','=','payin.student_id')
+        ->select('students.firstname','students.lastname','payin.amount','payin.id','payin.real_money','payin.virtual_money','payin.created_at')
+      //  ->where('payin.created_at','>=',$dateBegin)
+       // ->where('payin.created_at','<=',$dateEnd)
+        ->orderBy('payin.id','DESC')
+        ->limit($numberRecord)
+        ->offset($vitri)
+        ->get();
+        return json_encode($payins);
+        
+    }
+    public function getTotalPayinJson()
+    {
+        return Payin::count();
+    }
+
 }

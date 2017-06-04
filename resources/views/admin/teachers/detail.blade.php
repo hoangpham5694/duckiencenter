@@ -7,7 +7,7 @@
 
 <div class="row teacher-info">
   <div class="col-sm-4 image">
-    <img src="{!! asset('public/upload/teacherimages')!!}/{{  $teacher['image']}}" alt="">
+    <img src="{!! asset('upload/teacherimages')!!}/{{  $teacher['image']}}" alt="">
   </div>
   <div class="col-sm-8 info">
     <table>

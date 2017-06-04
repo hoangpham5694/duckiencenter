@@ -201,6 +201,6 @@ Danh sách lớp {!! $course->name !!}
   <script>
 
   </script>
-  <script src="<?php echo asset('public/app/controller/admins/CourseStudentController.js') ; ?>"></script>  
+  <script src="<?php echo asset('app/controller/admins/CourseStudentController.js') ; ?>"></script>  
 
 @endsection

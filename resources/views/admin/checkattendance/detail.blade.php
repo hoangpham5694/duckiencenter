@@ -234,6 +234,6 @@ Chi tiết buổi học {{ $attendance->name }}
 <script>
 
 </script>
-<script src="<?php echo asset('public/app/controller/admins/DetailAttendanceController.js') ; ?>"></script>  
+<script src="<?php echo asset('app/controller/admins/DetailAttendanceController.js') ; ?>"></script>  
 
 @endsection

@@ -79,6 +79,12 @@
         </td>
         <td> {{number_format($student->amount ,0)  }} VND </td>
       </tr>
+                     <tr>
+        <td>
+           <strong>Tiền học thử:</strong>
+        </td>
+        <td> {{number_format($student->amount_trial ,0)  }} VND </td>
+      </tr>
     </table>
 
 
@@ -206,5 +212,5 @@
 </div>
 @endsection
 @section('footer')
-   <script src="<?php echo asset('public/app/controller/admins/DetailStudentController.js') ; ?>"></script>  
+   <script src="<?php echo asset('app/controller/admins/DetailStudentController.js') ; ?>"></script>  
 @endsection

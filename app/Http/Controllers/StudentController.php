@@ -110,7 +110,7 @@ class StudentController extends Controller
     }
     public function getStudentDetailAdmin($id){
         $student = Student::join('nations','nations.id','=','students.nation_id')
-        ->select('students.firstname','students.lastname','students.id','students.phone','students.dob','students.gender','students.email','students.address','students.parents_phone','students.amount','nations.name')
+        ->select('students.firstname','students.lastname','students.id','students.phone','students.dob','students.gender','students.email','students.address','students.parents_phone','students.amount','students.amount_trial','nations.name')
         ->where('students.status','=','active')->findOrFail($id);
         $courses = CourseStudent::join('courses','courses.id','=','course_student.course_id')->join('teachers','teachers.id','=','courses.teacher_id') 
         ->select('courses.id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
@@ -120,7 +120,7 @@ class StudentController extends Controller
     }
     public function getStudentDetailManager($id){
         $student = Student::join('nations','nations.id','=','students.nation_id')
-        ->select('students.firstname','students.lastname','students.id','students.phone','students.dob','students.gender','students.email','students.address','students.parents_phone','students.amount','nations.name')
+        ->select('students.firstname','students.lastname','students.id','students.phone','students.dob','students.gender','students.email','students.address','students.parents_phone','students.amount','students.amount_trial','nations.name')
         ->where('students.status','=','active')->findOrFail($id);
         $courses = CourseStudent::join('courses','courses.id','=','course_student.course_id')->join('teachers','teachers.id','=','courses.teacher_id') 
         ->select('courses.id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
@@ -139,7 +139,7 @@ class StudentController extends Controller
         $student->firstname = $request->txtfirstname;
         $student->lastname = $request->txtlastname;
         $student->name = $request->txtlastname.' '.$request->txtfirstname;
-        $student->username = $request->txtusername;
+       
         $student->gender = $request->selectgender;
 
         $student->nation_id = $request->selectnation;
@@ -206,6 +206,17 @@ class StudentController extends Controller
         ->select('course_student.id','courses.id as course_id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
         ->where('course_student.student_id','=',$studentid)->get();
         return $courses;
+    }
+    public function getDetailStudentTeacher($id)
+    {
+        $student = Student::join('nations','nations.id','=','students.nation_id')
+        ->select('students.firstname','students.lastname','students.id','students.phone','students.dob','students.gender','students.email','students.address','students.parents_phone','students.amount','nations.name')
+        ->where('students.status','=','active')->findOrFail($id);
+        $courses = CourseStudent::join('courses','courses.id','=','course_student.course_id')->join('teachers','teachers.id','=','courses.teacher_id') 
+        ->select('courses.id','courses.name','courses.fee','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')->where('courses.status','=','active')
+        ->where('course_student.student_id','=',$id)->get();
+        //dd($courses);
+        return view('teacher.students.detail',['student'=>$student,'courses'=>$courses]);
     }
 
 }

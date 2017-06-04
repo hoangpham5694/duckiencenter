@@ -36,6 +36,9 @@ class DebtController extends Controller
     		$student->amount = $student->amount - $debt->money;
     		$attendance->money = $attendance->money + $debt->money;
     		$teacher->amount += $debt->money * $teacher->percent /100;
+            $ducKienAccount = Teacher::findOrFail(0);
+            $ducKienAccount->amount += $debt->money * (100 - $teacher->percent) /100;
+            $ducKienAccount->save();
     		$debt->delete();
     		$student->save();
     		$teacher->save();

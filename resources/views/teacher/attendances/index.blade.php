@@ -79,5 +79,5 @@
 
 @endsection
 @section('footer')
-  <script src="<?php echo asset('public/app/controller/teachers/AttendanceController.js') ; ?>"></script>  
+  <script src="<?php echo asset('app/controller/teachers/AttendanceController.js') ; ?>"></script>  
 @endsection

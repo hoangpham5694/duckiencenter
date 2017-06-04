@@ -95,7 +95,7 @@ class NewsController extends Controller
 
            $data = News::
            join('news_categories','news_categories.id','=','news.cate_id')
-           ->select('news.id','news_categories.name','news.title','news.created_at','news.image')
+           ->select('news.id','news.cate_id','news.description','news_categories.name','news.title','news.created_at','news.image')
             ->where('news.status','=','active')
             ->where(function($query) use ($keyword){
             $query->where('news.title','LIKE','%'.$keyword.'%');
@@ -108,11 +108,23 @@ class NewsController extends Controller
     }
     public function getTotalNewsJson(Request $request)
     {
-    	return News::where('status','=','active')->count();
+        $cateId = $request->cateid;
+        if($cateId == ""){
+            $cateId = null;
+        } 
+    	return News::where('status','=','active')
+        ->where('cate_id','LIKE',$cateId)
+        ->count();
     }
     public function getDetailNewsAdmin($id)
     {
     	$news = News::join('news_categories','news_categories.id','=','news.cate_id')->findOrFail($id);
     	return view('admin.news.detail',['news'=> $news]);
+    }
+    public function getDeleteNews($id)
+    {
+        $news = News::findOrFail($id);
+        $news->delete();
+        return "Xóa bài viết thành công";
     }
 }

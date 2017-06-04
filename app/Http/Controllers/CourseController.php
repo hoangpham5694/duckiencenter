@@ -39,21 +39,21 @@ class CourseController extends Controller
             $teacherId = null;
         }
         $vitri =($page -1 ) * $numberRecord;
-     //   $totalTeacher = Teacher::count();
-    //    $numPages = $totalApp / $numberRecord +1;
-       // dd($user);
+
            $data = Course::
-     //      join('teachers','teachers.id','=','courses.teacher_id')
-           join('course_student','course_student.student_id','=','courses.id')
-           ->select('courses.id','courses.name','courses.max_students','courses.fee','courses.status')
-        //    ->where('courses.status','=','active')
-        //    ->where('course_student.student_id','=',$user->id)
-        //    ->where(function($query) use ($keyword){
-        //    $query->where('courses.name','LIKE','%'.$keyword.'%');
-        //    })
-        //   ->where('courses.agency_id','LIKE', $agencyId)
-        //    ->where('courses.teacher_id','LIKE', $teacherId)
-        //    ->orderBy('courses.id','DESC')->limit($numberRecord)->offset($vitri)
+           join('agencies','agencies.id','=','courses.agency_id')
+           ->join('teachers','teachers.id','=','courses.teacher_id')
+         ->rightJoin('course_student','course_student.course_id','=','courses.id')
+           ->select('agencies.name as agency_name','courses.id','courses.name','courses.max_students','courses.fee','courses.status','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname')
+            ->where('courses.status','=','active')
+            ->where('course_student.student_id','=',$user->id)
+        ->where(function($query) use ($keyword){
+            $query->where('courses.name','LIKE','%'.$keyword.'%');
+            })
+           ->where('courses.agency_id','LIKE', $agencyId)
+            ->where('courses.teacher_id','LIKE', $teacherId)
+            ->orderBy('courses.id','DESC')->limit($numberRecord)->offset($vitri)
+           ->groupBy('courses.id')
             ->get();
         
         return $data;
@@ -62,7 +62,16 @@ class CourseController extends Controller
     }
     public function getCourseTotalIndividualJson()
     {
-        # code...
+         $user =  Auth::guard('students')->user();
+         $data = Course::
+           join('teachers','teachers.id','=','courses.teacher_id')
+         ->  rightJoin('course_student','course_student.course_id','=','courses.id')
+          
+            ->where('courses.status','=','active')
+            ->where('course_student.student_id','=',$user->id)
+       
+            ->count();
+        return $data;
     }
     public function getCourseListJson(Request $request){
         $keyword = $request->keyword;
@@ -109,6 +118,7 @@ class CourseController extends Controller
 		$course->fee = $request->txtFee;
 		$course->opening_date = $request->txtOpeningDate;
 		$course->agency_id = $request->selectagency;
+        $course->description = $request->txtDescription;
 		$course->teacher_id = $request->selectTeacher;
 		$course->status = "active";
 		$course->save();	
@@ -130,7 +140,7 @@ class CourseController extends Controller
         $course->opening_date = $request->txtOpeningDate;
         $course->agency_id = $request->selectagency;
         $course->teacher_id = $request->selectTeacher;
-
+        $course->description = $request->txtDescription;
         $course->save();    
         return redirect()->route('getCourseListAdmin')->with(['flash_level'=>'alert-success','flash_message' => 'Sửa lớp học thành công'] );
 
@@ -205,6 +215,56 @@ class CourseController extends Controller
     public function getListAgenciesJson(){
         $agencies = Agency::select('id','name')->get();
         return $agencies;
+    }
+    public function getListCourseIndividualTeacher()
+    {
+        return view('teacher.courses.list-individual');
+    }
+    public function getListCourseIndividualTeacherJson(Request $request)
+    {
+        $keyword = $request->keyword;
+        $numberRecord= $request->max;
+        $agencyId =$request->agencyid;
+        $teacher =  Auth::guard('teachers')->user();
+        $teacherId = $teacher->id;
+        $page = $request->page;
+        if($agencyId == ""){
+            $agencyId = null;
+        }
+        if($teacherId == ""){
+            $teacherId = null;
+        }
+        $vitri =($page -1 ) * $numberRecord;
+     //   $totalTeacher = Teacher::count();
+    //    $numPages = $totalApp / $numberRecord +1;
+
+           $data = Course::join('agencies','agencies.id','=','courses.agency_id')
+           ->join('teachers','teachers.id','=','courses.teacher_id')
+           ->select('courses.id','courses.name','courses.description','courses.max_students','courses.fee','agencies.name as agency_name','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname','courses.status')
+            ->where('courses.status','=','active')
+            ->where(function($query) use ($keyword){
+            $query->where('courses.name','LIKE','%'.$keyword.'%');
+            })
+            ->where('courses.agency_id','LIKE', $agencyId)
+            ->where('courses.teacher_id','LIKE', $teacherId)
+            ->orderBy('courses.id','DESC')->limit($numberRecord)->offset($vitri)->get();
+        
+        return json_encode($data);
+    }
+    public function getCourseIndividualTotalJson(){
+         $teacher =  Auth::guard('teachers')->user();
+        return Course::where('status','=','active')->where('teacher_id','=',$teacher->id)->count();
+    }
+
+    public function getCourseDetailTeacher($id)
+    {
+        $course = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.description','courses.fee','agencies.name as agency_name','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname','courses.status')->where('courses.status','=','active')->find($id);
+        return view('teacher.courses.detail',['course'=>$course]);
+    }
+    public function getCourseDetailStudent($id)
+    {
+        $course = Course::join('agencies','agencies.id','=','courses.agency_id')->join('teachers','teachers.id','=','courses.teacher_id')->select('courses.id','courses.name','courses.max_students','courses.description','courses.fee','agencies.name as agency_name','teachers.firstname as teacher_firstname','teachers.lastname as teacher_lastname','courses.status')->where('courses.status','=','active')->find($id);
+        return view('student.courses.detail',['course'=>$course]);
     }
 
 }

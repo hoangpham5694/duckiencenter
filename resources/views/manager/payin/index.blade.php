@@ -72,5 +72,5 @@
 
 @endsection
 @section('footer')
-  <script src="<?php echo asset('public/app/controller/managers/StudentController.js') ; ?>"></script>  
+  <script src="<?php echo asset('app/controller/managers/StudentController.js') ; ?>"></script>  
 @endsection

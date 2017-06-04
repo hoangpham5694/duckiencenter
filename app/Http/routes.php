@@ -14,8 +14,32 @@
 Route::get('/', ['uses'=>'GuestController@getIndex']);
 Route::get('bai-viet/{id}/{slug}', ['uses'=>'GuestController@getViewPost']);
 Route::get('danh-muc/{id}/{slug}', ['uses'=>'GuestController@getListPost']);
-Route::get('listpostjson',[ 'uses' => 'NewsController@getListNewsJson']);
+Route::get('hoc-vien', ['uses'=>'GuestController@getListStudents']);
+Route::get('thong-tin-hoc-vien/{id}', ['uses'=>'GuestController@getDetailStudent']);
+Route::get('giao-vien', ['uses'=>'GuestController@getListTeachers']);
+Route::get('thong-tin-giao-vien/{id}', ['uses'=>'GuestController@getDetailTeacher']);
+Route::get('lop-hoc', ['uses'=>'GuestController@getListCourses']);
+Route::get('thong-tin-lop-hoc/{id}', ['uses'=>'GuestController@getDetailCourse']);
+Route::group(['prefix' => 'api'], function(){
+	Route::get('listpostjson',[ 'uses' => 'NewsController@getListNewsJson']);
+	Route::get('totalpostjson',[ 'uses' => 'NewsController@getTotalNewsJson']);
+	Route::get('totalstudentjson',[ 'uses' => 'StudentController@getStudentTotalJson']);
+	Route::get('liststudentjson/{max}/{page}',[ 'uses' => 'StudentController@getListStudentJson']);
+	Route::get('listcoursesofstudentjson/{studentid}',['uses'=> 'StudentController@getListCoursesOfStudentJson']);
+	Route::get('listjson/{max}/{page}',['as' => 'getTeacherListJsonAdmin', 'uses' => 'TeacherController@getTeacherListJson']);
+	Route::get('totaljson',['as' => 'getTeacherTotalJsonAdmin', 'uses' => 'TeacherController@getTeacherTotalJson']);
+	Route::get('listcoursestudentsjson/{id}',['as' => 'getCourseStudentsListJsonAdmin', 'uses' => 'CourseController@getCourseStudentsListJsonAdmin']);
+	Route::get('listcoursejson',[ 'uses' => 'CourseController@getCourseListJson']);
+	Route::get('totalcoursejson',[ 'uses' => 'CourseController@getCourseTotalJson']);
+	Route::get('listteachersimplejson',['uses' => 'TeacherController@getTeacherListSimpleJson']);
 
+	Route::get('listagencysimplejson',['uses' => 'AgencyController@getAgencyListSimpleJson']);
+	Route::get('listattendancejson/{max}/{page}',[ 'uses' => 'AttendanceController@getListAttendanceJson']);
+
+
+	Route::get('listadsjson',['uses'=>'AdsBannerController@getListAdsBannerJson']);
+	Route::get('totaladsjson',['uses'=>'AdsBannerController@getTotalAdsBannerJson']);
+});
 
 Route::get('logout',['as' => 'getLogin', 'uses' => 'LoginController@getLogout']);
 Route::get('login',['as' => 'getLogin', 'uses' => 'LoginController@getLogin']);
@@ -35,6 +59,44 @@ Route::group(['middleware'=>'isteacher'], function(){
 			Route::get('listattendancesofmonthlyjson/{monthlyid}',['as' => 'getListAttendancesOfMonthlyJson', 'uses' => 'AttendanceController@getListMonthlyOfCourseJson']);
 
     	});
+    	Route::group(['prefix'=>'course'],function(){
+    		Route::get('/',['uses' => 'CourseController@getListCourseIndividualTeacher']);
+    		Route::get('detail/{id}',[ 'uses' => 'CourseController@getCourseDetailTeacher']);
+		
+    		Route::group(['prefix'=>'ajax'],function(){
+    			Route::get('listcourseindividual',['uses' => 'CourseController@getListCourseIndividualTeacherJson']);
+    			Route::get('totalcourseindividual',['uses' => 'CourseController@getCourseIndividualTotalJson']);
+				Route::get('listcoursestudents/{id}',[ 'uses' => 'CourseController@getCourseStudentsListJsonAdmin']);
+
+    		});
+    	});
+    	Route::group(['prefix'=>'thread'],function(){
+    		Route::get('create/{courseid}',[ 'uses' => 'ThreadController@getCreateThreadTeacher']);
+    		Route::post('create/{courseid}',[ 'uses' => 'ThreadController@postCreateThreadTeacher']);
+    		Route::get('detail/{threadid}',[ 'uses' => 'ThreadController@getDetailThreadTeacher']);
+    		Route::group(['prefix'=>'api'],function(){
+    			Route::get('list/{courseid}/{max}/{page}',[ 'uses' => 'ThreadController@getListThreadJson']);
+    			Route::get('total/{courseid}',[ 'uses' => 'ThreadController@getTotalThreadJson']);
+    		});
+    	});
+    	Route::group(['prefix'=>'student'],function(){
+    	//	Route::get('/',['uses' => 'StudentController@getListStudentsTeacher']);
+    		Route::get('detail/{id}',['uses' => 'StudentController@getDetailStudentTeacher']);
+		
+    		Route::group(['prefix'=>'ajax'],function(){
+    			Route::get('listcourseindividual',['uses' => 'CourseController@getListCourseIndividualTeacherJson']);
+    			Route::get('totalcourseindividual',['uses' => 'CourseController@getCourseIndividualTotalJson']);
+				Route::get('listcoursestudents/{id}',[ 'uses' => 'CourseController@getCourseStudentsListJsonAdmin']);
+				Route::get('listcoursesofstudent/{studentid}',['uses'=> 'StudentController@getListCoursesOfStudentJson']);
+
+    		});
+    	});
+    	Route::group(['prefix' => 'account'], function(){
+			Route::get('profile',['uses'=>'AccountController@getProfileTeacher']);
+			Route::get('edit',['uses'=>'AccountController@getEditTeacher']);
+			Route::post('edit',['uses'=>'AccountController@postEditTeacher']);
+
+		});
 
 	});
 });
@@ -44,13 +106,21 @@ Route::group(['middleware'=>'isstudent'], function(){
 		Route::get('/', function(){
     		return view('student.dashboard.main');
     	});
+
     	Route::group(['prefix' => 'course'], function(){
     		Route::get('list/{method}',['uses'=>'CourseController@getListAllCourseStudent']);
 			Route::get('listalljson',[ 'uses' => 'CourseController@getCourseListJson']);
 			Route::get('totaljson',[ 'uses' => 'CourseController@getCourseTotalJson']);
 			Route::get('listindividualjson',[ 'uses' => 'CourseController@getCourseListIndividualJson']);
 			Route::get('totalindividualjson',[ 'uses' => 'CourseController@getCourseTotalIndividualJson']);
-	
+			Route::get('detail/{id}',[ 'uses' => 'CourseController@getCourseDetailStudent']);
+		
+    		Route::group(['prefix'=>'ajax'],function(){
+    			Route::get('listcourseindividual',['uses' => 'CourseController@getListCourseIndividualTeacherJson']);
+    			Route::get('totalcourseindividual',['uses' => 'CourseController@getCourseIndividualTotalJson']);
+				Route::get('listcoursestudents/{id}',[ 'uses' => 'CourseController@getCourseStudentsListJsonAdmin']);
+
+    		});
     	});
     	Route::group(['prefix' => 'teacher'], function(){
 			Route::get('listsimplejson',['uses' => 'TeacherController@getTeacherListSimpleJson']);
@@ -60,6 +130,12 @@ Route::group(['middleware'=>'isstudent'], function(){
     		Route::get('listsimplejson',['uses' => 'AgencyController@getAgencyListSimpleJson']);
     	
     	});
+    	Route::group(['prefix' => 'account'], function(){
+			Route::get('profile',['uses'=>'AccountController@getProfileStudent']);
+			Route::get('edit',['uses'=>'AccountController@getEditStudent']);
+			Route::post('edit',['uses'=>'AccountController@postEditStudent']);
+
+		});
 
 	});
 });
@@ -68,6 +144,9 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 		//Route::get('/',['as' => 'getStatistics', 'uses' => 'AdminController@getStatistics']);
 		Route::get('/', function(){
     		return view('admin.dashboard.main');
+    	});
+    	Route::group(['prefix' => 'history'], function(){
+
     	});
     	Route::group(['prefix' => 'agency'], function(){
     		Route::get('listsimplejson',['uses' => 'AgencyController@getAgencyListSimpleJson']);
@@ -161,8 +240,18 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::get('index',['uses'=>'PayinController@getIndexPayinAdmin']);
 			Route::get('add/{studentid}',['uses'=>'PayinController@getAddPayinAdmin']);
 			Route::post('add/{studentid}',['uses'=>'PayinController@postAddPayinAdmin']);
+			Route::get('addtrial/{studentid}',['uses'=>'PayinController@getAddTrialAdmin']);
+			Route::post('addtrial/{studentid}',['uses'=>'PayinController@postAddTrialAdmin']);
+
 			Route::get('detail/{id}',['uses'=>'PayinController@getDetailPayinAdmin']);
 			Route::get('bill/{id}',['uses'=>'PayinController@getBillPayinAdmin']);
+			Route::get('history',['uses'=>'PayinController@getHistoryPayinAdmin']);
+
+			Route::group(['prefix' => 'api'], function(){
+				Route::get('listpayin/{max}/{page}',['uses'=>'PayinController@getListPayinJson']);
+				Route::get('totalpayin',['uses'=>'PayinController@getTotalPayinJson']);
+
+			});
 		});
 		Route::group(['prefix' => 'payout'], function(){
 			Route::get('index',['uses'=>'PayoutController@getIndexPayoutAdmin']);
@@ -170,6 +259,13 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::post('add/{studentid}',['uses'=>'PayoutController@postAddPayoutAdmin']);
 			Route::get('detail/{id}',['uses'=>'PayoutController@getDetailPayoutAdmin']);
 			Route::get('bill/{id}',['uses'=>'PayoutController@getBillPayoutAdmin']);
+			Route::get('history',['uses'=>'PayoutController@getHistoryPayoutAdmin']);
+
+			Route::group(['prefix' => 'api'], function(){
+				Route::get('listpayout/{max}/{page}',['uses'=>'PayoutController@getListPayoutJson']);
+				Route::get('totalpayout',['uses'=>'PayoutController@getTotalPayoutJson']);
+				
+			});
 		});
 		Route::group(['prefix' => 'user'], function(){
 			Route::get('list',['uses'=>'UserController@getListUser']);
@@ -185,7 +281,7 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 		Route::group(['prefix' => 'account'], function(){
 			Route::get('profile',['uses'=>'AccountController@getProfileAdmin']);
 			Route::get('edit',['uses'=>'AccountController@getEditAdmin']);
-			Route::post('edit',['uses'=>'AccountController@postEditUser']);
+			Route::post('edit',['uses'=>'AccountController@postEditAdmin']);
 
 		});
 		Route::group(['prefix' => 'news'], function(){
@@ -197,9 +293,30 @@ Route::group(['middleware'=>'isroleadmin'], function(){
 			Route::get('totaljson',['uses'=>'NewsController@getTotalNewsJson']);
 			Route::get('edit/{id}',['uses'=>'NewsController@getEditNewsAdmin']);
 			Route::post('edit/{id}',['uses'=>'NewsController@postEditNewsAdmin']);
+			Route::get('delete/{id}',['uses'=>'NewsController@getDeleteNews']);
 		});
 		Route::group(['prefix' => 'cate'], function(){
 			Route::get('listsimplejson',['uses'=>'CateController@getListCatesSimpleJson']);
+
+		});
+		Route::group(['prefix' => 'ads'], function(){
+			Route::get('list',['uses'=>'AdsBannerController@getListAdsBannerAdmin']);
+			Route::get('add',['uses'=>'AdsBannerController@getAddAdsBannerAdmin']);
+			Route::post('add',['uses'=>'AdsBannerController@postAddAdsBannerAdmin']);
+			Route::get('listjson',['uses'=>'AdsBannerController@getListAdsBannerJson']);
+			Route::get('totaljson',['uses'=>'AdsBannerController@getTotalAdsBannerJson']);
+			Route::get('delete/{id}',['uses'=>'AdsBannerController@getDeleteAdsBannerAdmin']);
+			Route::get('edit/{id}',['uses'=>'AdsBannerController@getEditAdsBannerAdmin']);
+			Route::post('edit/{id}',['uses'=>'AdsBannerController@postEditAdsBannerAdmin']);
+
+		});
+		Route::group(['prefix' => 'history'], function(){
+			Route::get('index',['uses'=>'HistoryController@getIndex']);
+			Route::get('withdrawal',['uses'=>'HistoryController@getWithdrawal']);
+			Route::post('withdrawal',['uses'=>'HistoryController@postWithdrawal']);
+			Route::get('detailwithdrawal/{id}',['uses'=>'HistoryController@getDetailWithdrawal']);
+			Route::get('withdrawalbill/{id}',['uses'=>'HistoryController@getWithdrawalBill']);
+		
 
 		});
 	});
@@ -211,6 +328,12 @@ Route::group(['middleware'=>'isrolemanager'], function(){
 			Route::get('debtofstudentjson/{studentid}',['uses'=>'DebtController@getDebtOfStudentJson']);
 			Route::get('removedebt/{debtid}',['uses'=>'DebtController@getRemoveDebt']);
 
+
+		});
+		Route::group(['prefix' => 'account'], function(){
+			Route::get('profile',['uses'=>'AccountController@getProfileManager']);
+			Route::get('edit',['uses'=>'AccountController@getEditManager']);
+			Route::post('edit',['uses'=>'AccountController@postEditManager']);
 
 		});
 		Route::get('/', function(){

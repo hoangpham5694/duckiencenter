@@ -90,7 +90,7 @@ class CheckAttendanceController extends Controller
             $course = Course::findOrFail($attendance->course_id);
             $students = CourseStudent::join('students','students.id','=','course_student.student_id')
     //    ->join('courses','courses.id','=','course_student.course_id')
-            ->select('course_student.id','course_student.student_id','students.amount','course_student.status')
+            ->select('course_student.id','students.amount_trial','course_student.student_id','students.amount','course_student.status')
             ->where('course_student.course_id','=',$attendance->course_id)->get();
             $money = $attendance->money;
           //  dd($students);
@@ -107,23 +107,31 @@ class CheckAttendanceController extends Controller
                 $std = Student::findOrFail($student->student_id);
            //     dd($std);
                 if($student->status == "active"){
-                    if($std->amount >= $course->fee){
-                        $std->amount = $std->amount - $course->fee;
-                        $money += $course->fee;
-                     //   echo "money: ".$money;
-                        $teacher->amount = $teacher->amount+ $course->fee * $teacher->percent /100;
-                        $std->save();
+                    if($std->amount_trial >= $course->fee){
+                        $std->amount_trial = $std->amount_trial - $course->fee;
                     }else{
-                        $debt = new Debt();
-                        $debt->student_id = $student->student_id;
-                        $debt->attendance_id = $attendance->id;
-                        $debt->money = $course->fee;
-                        $debt->save();
-                  //  $courseStudent= CourseStudent::findOrFail($student->student_id);
-                        $student->status ="deactive";
+                        if($std->amount >= $course->fee){
+                            $std->amount = $std->amount - $course->fee;
+                            $money += $course->fee;
+                         //   echo "money: ".$money;
+                            $teacher->amount = $teacher->amount+ $course->fee * $teacher->percent /100;
+                            $ducKienAccount = Teacher::findOrFail(0);
+                            $ducKienAccount->amount += $course->fee * (100 - $teacher->percent) /100;
+                            $ducKienAccount->save();
+                            $std->save();
+                        }else{
+                            $debt = new Debt();
+                            $debt->student_id = $student->student_id;
+                            $debt->attendance_id = $attendance->id;
+                            $debt->money = $course->fee;
+                            $debt->save();
+                      //  $courseStudent= CourseStudent::findOrFail($student->student_id);
+                            $student->status ="deactive";
 
-                     //   echo "dsfds";
+                         //   echo "dsfds";
+                        }
                     }
+                    $std->save();
                     $student->save();
                 }
 

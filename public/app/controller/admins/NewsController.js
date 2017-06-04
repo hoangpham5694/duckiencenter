@@ -40,15 +40,17 @@ app.controller('NewsController', function($scope, $http, API,$timeout){
 	 	getListNews(maxRecord,page);
 	 }
 	$scope.confirmDelete = function(id){
-		var isConfirmDelete = confirm('Bạn có chắc muốn xóa lớp học này không');
+		var isConfirmDelete = confirm('Bạn có chắc muốn xóa bài viết này không');
 		if(isConfirmDelete){
 			$http.get(API + 'adminsites/news/delete/'+id).then(function successCallback (response){
 		//	console.log(response);
 			//console.log($scope.page + "--" + maxRecord);
+			alert(response.data);
 			getListNews(maxRecord,$scope.page);
 		//	alert(response.data);
 			}  , function errorCallback(response) {
 			console.log(response);
+
 
 			}) ;
 		}else{

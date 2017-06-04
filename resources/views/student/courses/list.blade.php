@@ -49,7 +49,7 @@
                                         <th>Học phí</th>
                                         <th>Chi nhánh</th>
                                         <th>Giáo viên</th>
-                                        <th> <a href="{!! url('adminsites/course/add') !!}" class="btn btn-outline btn-xs btn-primary">Thêm lớp</a></th>
+                                        <th> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,5 +79,5 @@
 
 @endsection
 @section('footer')
-  <script src="<?php echo asset('public/app/controller/students/CourseController.js') ; ?>"></script>  
+  <script src="<?php echo asset('app/controller/students/CourseController.js') ; ?>"></script>  
 @endsection

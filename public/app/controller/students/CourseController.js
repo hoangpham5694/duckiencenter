@@ -6,7 +6,20 @@ app.controller('CourseController', function($scope, $http, API,$timeout){
 	$scope.sltAgency = "";
 	$scope.txtKeyword = "";
 	 var getTotalCourses = function(){
-	 	$http.get(API + 'studentsites/course/totaljson').then(function successCallback (response){
+		switch($scope.method){
+			case "all":
+				var url= API + 'studentsites/course/totaljson';
+			break;
+			case "individual":
+				var url= API + 'studentsites/course/totalindividualjson';
+
+			break;
+			default:
+				var url= API + 'studentsites/course/totaljson';
+			break;
+		}
+
+	 	$http.get(url).then(function successCallback (response){
 	
 		$scope.total = response.data /maxRecord +1 ;
 		console.log(response.data);
@@ -18,8 +31,25 @@ app.controller('CourseController', function($scope, $http, API,$timeout){
     // or server returns response with an error status.
   		}) ;
 	 }
+	$scope.setMethod = function(method){
+		$scope.method = method;
+		console.log($scope.method);
+		getListCourses(maxRecord,1);
+	}
 	var getListCourses = function (max, page){
-		var url= API + 'studentsites/course/listalljson?max='+max+'&page='+page+'&teacherid='+$scope.sltTeacher+'&agencyid='+$scope.sltAgency+'&keyword='+$scope.txtKeyword;
+		switch($scope.method){
+			case "all":
+				var url= API + 'studentsites/course/listalljson?max='+max+'&page='+page+'&teacherid='+$scope.sltTeacher+'&agencyid='+$scope.sltAgency+'&keyword='+$scope.txtKeyword;
+			break;
+			case "individual":
+				var url= API + 'studentsites/course/listindividualjson?max='+max+'&page='+page+'&teacherid='+$scope.sltTeacher+'&agencyid='+$scope.sltAgency+'&keyword='+$scope.txtKeyword;
+
+			break;
+			default:
+					var url= API + 'studentsites/course/listalljson?max='+max+'&page='+page+'&teacherid='+$scope.sltTeacher+'&agencyid='+$scope.sltAgency+'&keyword='+$scope.txtKeyword;
+			break;
+		}
+		
 		console.log(url);
 		$http.get(url).then(function successCallback (response){
 		getTotalCourses();
@@ -34,7 +64,7 @@ app.controller('CourseController', function($scope, $http, API,$timeout){
 		
 	 };
 
-	 getListCourses(maxRecord,1);
+	 
 
 	 $scope.getlistcourses = function(page){
 	 	

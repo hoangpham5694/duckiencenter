@@ -16,7 +16,7 @@
 <div class="post-main">
 	<div class="description">
 		<div class="col-sm-3">
-				<img src="{!! asset('public/upload/newsimages') !!}/{!! $post->image!!}" alt="">
+				<img src="{!! asset('upload/newsimages') !!}/{!! $post->image!!}" alt="">
 		</div>
 		<div class="col-sm-9">
 			<b>{{ $post->description }}</b>

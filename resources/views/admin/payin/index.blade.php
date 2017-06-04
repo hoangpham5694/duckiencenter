@@ -56,6 +56,9 @@
                                       <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/payin/add') !!}/{% student.id %}">
                                         <i class="fa fa-credit-card-alt" aria-hidden="true"> Nạp tiền</i>
                                       </a>
+                                      <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/payin/addtrial') !!}/{% student.id %}">
+                                        Nạp tiền học thử
+                                      </a>
 
                                          
                                           </td>
@@ -72,5 +75,5 @@
 
 @endsection
 @section('footer')
-  <script src="<?php echo asset('public/app/controller/admins/StudentController.js') ; ?>"></script>  
+  <script src="<?php echo asset('app/controller/admins/StudentController.js') ; ?>"></script>  
 @endsection

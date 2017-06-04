@@ -36,26 +36,28 @@
                                         <th>Mã lớp</th>
                                         <th>Hình ảnh</th>
                                         <th>Tên</th>
+                                        <th>Danh mục</th>
                                         <th>Ngày đăng</th>
                                        
-                                        <th> <a href="{!! url('adminsites/course/add') !!}" class="btn btn-outline btn-xs btn-primary">Thêm lớp</a></th>
+                                        <th> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 	<tr ng-repeat="news in newss">
                                 		<td>{% news.id %}</td>
-                                		<td><img ng-src="{!! asset('public/upload/newsimages') !!}/{% news.image %}" width="60px" height="60px" alt=""></td>
+                                		<td><img ng-src="{!! asset('upload/newsimages') !!}/{% news.image %}" width="60px" height="60px" alt=""></td>
                                 		<td>{% news.title %}</td>
+                                    <td>{% news.name %}</td>
                                 		<td>{% news.created_at %}</td>
         
                                 		<td>
                                             <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/news/detail') !!}/{% news.id %}">
                                                 <i class="fa fa-address-card" aria-hidden="true"></i>Chi tiết </a>
 
-                                            <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/news/edit') !!}/{% course.id %}">
+                                            <a class="btn btn-xs btn-primary" ng-href="{!! url('adminsites/news/edit') !!}/{% news.id %}">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sửa
                                             </a>
-    <button class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(news.id)">  <i class="fa fa-trash" aria-hidden="true"></i> Xóa</button>
+    <button ng-show="news.cate_id !=1" class="btn btn-danger btn-xs btn-delete" ng-click="confirmDelete(news.id)">  <i class="fa fa-trash" aria-hidden="true"></i> Xóa</button>
                                           </td>
                                 	</tr>
                                 </tbody>
@@ -63,12 +65,12 @@
 
 <div class="btn-toolbar" role="toolbar" aria-label="...">
   <div class="btn-group" role="group" aria-label="...">
-  	<button type="button" ng-repeat="n in [1,total] | makeRange" ng-click="getlistcourses(n)" class="btn btn-default" ng-disabled="page == n">{% n %}</button>
+  	<button type="button" ng-repeat="n in [1,total] | makeRange" ng-click="changePage(n)" class="btn btn-default" ng-disabled="page == n">{% n %}</button>
   </div>
 
 </div>
 
 @endsection
 @section('footer')
-  <script src="<?php echo asset('public/app/controller/admins/NewsController.js') ; ?>"></script>  
+  <script src="<?php echo asset('app/controller/admins/NewsController.js') ; ?>"></script>  
 @endsection

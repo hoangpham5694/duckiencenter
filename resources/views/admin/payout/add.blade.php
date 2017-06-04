@@ -63,7 +63,7 @@
 
     
     <div class="form-group">
-    <label class="control-label col-sm-3" for="txtdate">Ngày nạp tiền:</label>
+    <label class="control-label col-sm-3" for="txtdate">Ngày rút tiền:</label>
     <div class="col-sm-9">
       <input type="text" class="form-control" readonly id="txtdate">
 

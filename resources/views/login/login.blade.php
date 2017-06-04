@@ -9,19 +9,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ Session::token() }}"> 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Quản lý lớp học</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?php echo asset('public/template/vendor/bootstrap/css/bootstrap.min.css') ; ?>" rel="stylesheet">
+    <link href="<?php echo asset('template/vendor/bootstrap/css/bootstrap.min.css') ; ?>" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="<?php echo asset('public/template/vendor/metisMenu/metisMenu.min.css') ; ?>" rel="stylesheet">
+    <link href="<?php echo asset('template/vendor/metisMenu/metisMenu.min.css') ; ?>" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="<?php echo asset('public/template/dist/css/sb-admin-2.css') ; ?>" rel="stylesheet">
+    <link href="<?php echo asset('template/dist/css/sb-admin-2.css') ; ?>" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<?php echo asset('public/template/vendor/font-awesome/css/font-awesome.min.css') ; ?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo asset('template/vendor/font-awesome/css/font-awesome.min.css') ; ?>" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,7 +39,7 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Trang quản trị Trung tâm Đức Kiến</h3>
+                        <h3 class="panel-title">Trang quản trị</h3>
                     </div>
                     <div class="panel-body">
                         <form role="form" action="" method="post">
@@ -81,16 +81,16 @@
     </div>
 
     <!-- jQuery -->
-    <script src="<?php echo asset('public/template/vendor/jquery/jquery.min.js') ; ?>"></script>
+    <script src="<?php echo asset('template/vendor/jquery/jquery.min.js') ; ?>"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo asset('public/template/vendor/bootstrap/js/bootstrap.min.js') ; ?>"></script>
+    <script src="<?php echo asset('template/vendor/bootstrap/js/bootstrap.min.js') ; ?>"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="<?php echo asset('public/template/vendor/metisMenu/metisMenu.min.js') ; ?>"></script>
+    <script src="<?php echo asset('template/vendor/metisMenu/metisMenu.min.js') ; ?>"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="<?php echo asset('public/template/dist/js/sb-admin-2.js') ; ?>"></script>
+    <script src="<?php echo asset('template/dist/js/sb-admin-2.js') ; ?>"></script>
 
 </body>
 
